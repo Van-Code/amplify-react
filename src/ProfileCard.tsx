@@ -25,7 +25,7 @@ export const ProfileCard = (props) => {
         <Flex direction="column" alignItems="flex-start">
           <Image
             alt="default photo"
-            src={user.image|| ""}
+            src={user.imagePath|| ""}
             width="33%"
           />
           <Flex

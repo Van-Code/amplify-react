@@ -22,17 +22,20 @@ export default function UserCreateForm(props) {
     email: "",
     bio: "",
     birthdate: "",
+    imagePath: "./assets/avatar.jpg"
   };
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
   const [bio, setBio] = React.useState(initialValues.bio);
   const [birthdate, setBirthdate] = React.useState(initialValues.birthdate);
+  const [imagePath, setImagePath] = React.useState(initialValues.imagePath);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
     setEmail(initialValues.email);
     setBio(initialValues.bio);
     setBirthdate(initialValues.birthdate);
+    setImagePath(initialValues.imagePath);
     setErrors({});
   };
   const validations = {
@@ -40,6 +43,7 @@ export default function UserCreateForm(props) {
     email: [{ type: "Email" }],
     bio: [],
     birthdate: [],
+    imagePath: []
   };
   const runValidationTasks = async (
     fieldName,
@@ -137,6 +141,7 @@ export default function UserCreateForm(props) {
               email,
               bio,
               birthdate,
+              imagePath
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -164,6 +169,7 @@ export default function UserCreateForm(props) {
               email: value,
               bio,
               birthdate,
+              imagePath
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -191,6 +197,7 @@ export default function UserCreateForm(props) {
               email,
               bio: value,
               birthdate,
+              imagePath
             };
             const result = onChange(modelFields);
             value = result?.bio ?? value;
@@ -219,6 +226,7 @@ export default function UserCreateForm(props) {
               email,
               bio,
               birthdate: value,
+              imagePath
             };
             const result = onChange(modelFields);
             value = result?.birthdate ?? value;

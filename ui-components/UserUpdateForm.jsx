@@ -24,11 +24,13 @@ export default function UserUpdateForm(props) {
     email: "",
     bio: "",
     birthdate: "",
+    imagePath: "./assets/avatar.jpg"
   };
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
   const [bio, setBio] = React.useState(initialValues.bio);
   const [birthdate, setBirthdate] = React.useState(initialValues.birthdate);
+  const [imagePath, setImagePath] = React.useState(initialValues.imagePath);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = userRecord
@@ -38,6 +40,7 @@ export default function UserUpdateForm(props) {
     setEmail(cleanValues.email);
     setBio(cleanValues.bio);
     setBirthdate(cleanValues.birthdate);
+    setImagePath(cleanValues.imagePath);
     setErrors({});
   };
   const [userRecord, setUserRecord] = React.useState(userModelProp);
@@ -61,6 +64,7 @@ export default function UserUpdateForm(props) {
     email: [{ type: "Email" }],
     bio: [],
     birthdate: [],
+    imagePath: []
   };
   const runValidationTasks = async (
     fieldName,
@@ -92,6 +96,7 @@ export default function UserUpdateForm(props) {
           email: email ?? null,
           bio: bio ?? null,
           birthdate: birthdate ?? null,
+          imageOPath: imagePath ?? null
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -156,6 +161,7 @@ export default function UserUpdateForm(props) {
               email,
               bio,
               birthdate,
+              imagePath
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -210,6 +216,7 @@ export default function UserUpdateForm(props) {
               email,
               bio: value,
               birthdate,
+              imagePath
             };
             const result = onChange(modelFields);
             value = result?.bio ?? value;
@@ -238,6 +245,7 @@ export default function UserUpdateForm(props) {
               email,
               bio,
               birthdate: value,
+              imagePath
             };
             const result = onChange(modelFields);
             value = result?.birthdate ?? value;
