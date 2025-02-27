@@ -4,13 +4,16 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getUser } from "./graphql/queries";
-import { updateUser } from "./graphql/mutations";
+import { getCurrentUser } from "./graphql/queries";
+import { updateCurrentUser } from "./graphql/mutations";
+import { FileUploader } from "@aws-amplify/ui-react-storage";
+import { VisuallyHidden } from '@aws-amplify/ui-react';
+
 const client = generateClient();
-export default function UserUpdateForm(props) {
+export default function CurrentUserUpdateForm(props) {
   const {
     id: idProp,
-    user: userModelProp,
+    currentUser: currentUserModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -20,12 +23,16 @@ export default function UserUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    loginID: "",
+    sub: "",
     name: "",
     email: "",
     bio: "",
     birthdate: "",
-    imagePath: "./assets/avatar.jpg"
+    imagePath: "../assets/avatar.jpg",
   };
+  const [loginID, setLoginID] = React.useState(initialValues.loginID);
+  const [sub, setSub] = React.useState(initialValues.sub);
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
   const [bio, setBio] = React.useState(initialValues.bio);
@@ -33,9 +40,11 @@ export default function UserUpdateForm(props) {
   const [imagePath, setImagePath] = React.useState(initialValues.imagePath);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = userRecord
-      ? { ...initialValues, ...userRecord }
+    const cleanValues = currentUserRecord
+      ? { ...initialValues, ...currentUserRecord }
       : initialValues;
+    setLoginID(cleanValues.loginID);
+    setSub(cleanValues.sub);
     setName(cleanValues.name);
     setEmail(cleanValues.email);
     setBio(cleanValues.bio);
@@ -43,28 +52,31 @@ export default function UserUpdateForm(props) {
     setImagePath(cleanValues.imagePath);
     setErrors({});
   };
-  const [userRecord, setUserRecord] = React.useState(userModelProp);
+  const [currentUserRecord, setCurrentUserRecord] =
+    React.useState(currentUserModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? (
             await client.graphql({
-              query: getUser.replaceAll("__typename", ""),
+              query: getCurrentUser.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
-          )?.data?.getUser
-        : userModelProp;
-      setUserRecord(record);
+          )?.data?.getCurrentUser
+        : currentUserModelProp;
+      setCurrentUserRecord(record);
     };
     queryData();
-  }, [idProp, userModelProp]);
-  React.useEffect(resetStateValues, [userRecord]);
+  }, [idProp, currentUserModelProp]);
+  React.useEffect(resetStateValues, [currentUserRecord]);
   const validations = {
+    loginID: [],
+    sub: [],
     name: [],
     email: [{ type: "Email" }],
     bio: [],
     birthdate: [],
-    imagePath: []
+    imagePath: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -92,11 +104,13 @@ export default function UserUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          loginID: loginID ?? null,
+          sub: sub ?? null,
           name: name ?? null,
           email: email ?? null,
           bio: bio ?? null,
           birthdate: birthdate ?? null,
-          imageOPath: imagePath ?? null
+          imagePath: imagePath ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -127,10 +141,10 @@ export default function UserUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updateUser.replaceAll("__typename", ""),
+            query: updateCurrentUser.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: userRecord.id,
+                id: currentUserRecord.id,
                 ...modelFields,
               },
             },
@@ -145,9 +159,70 @@ export default function UserUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserUpdateForm")}
+      {...getOverrideProps(overrides, "CurrentUserUpdateForm")}
       {...rest}
-    >
+    > <VisuallyHidden>
+      <TextField
+        label="Login id"
+        isRequired={false}
+        isReadOnly={false}
+        value={loginID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              loginID: value,
+              sub,
+              name,
+              email,
+              bio,
+              birthdate,
+              imagePath,
+            };
+            const result = onChange(modelFields);
+            value = result?.loginID ?? value;
+          }
+          if (errors.loginID?.hasError) {
+            runValidationTasks("loginID", value);
+          }
+          setLoginID(value);
+        }}
+        onBlur={() => runValidationTasks("loginID", loginID)}
+        errorMessage={errors.loginID?.errorMessage}
+        hasError={errors.loginID?.hasError}
+        {...getOverrideProps(overrides, "loginID")}
+      ></TextField>
+      <TextField
+        label="Sub"
+        isRequired={false}
+        isReadOnly={false}
+        value={sub}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              loginID,
+              sub: value,
+              name,
+              email,
+              bio,
+              birthdate,
+              imagePath,
+            };
+            const result = onChange(modelFields);
+            value = result?.sub ?? value;
+          }
+          if (errors.sub?.hasError) {
+            runValidationTasks("sub", value);
+          }
+          setSub(value);
+        }}
+        onBlur={() => runValidationTasks("sub", sub)}
+        errorMessage={errors.sub?.errorMessage}
+        hasError={errors.sub?.hasError}
+        {...getOverrideProps(overrides, "sub")}
+      ></TextField>
+      </VisuallyHidden>
       <TextField
         label="Name"
         isRequired={false}
@@ -157,11 +232,13 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              loginID,
+              sub,
               name: value,
               email,
               bio,
               birthdate,
-              imagePath
+              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -185,10 +262,13 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              loginID,
+              sub,
               name,
               email: value,
               bio,
               birthdate,
+              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -212,11 +292,13 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              loginID,
+              sub,
               name,
               email,
               bio: value,
               birthdate,
-              imagePath
+              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.bio ?? value;
@@ -231,7 +313,7 @@ export default function UserUpdateForm(props) {
         hasError={errors.bio?.hasError}
         {...getOverrideProps(overrides, "bio")}
       ></TextField>
-      <TextField
+       <VisuallyHidden><TextField
         label="Birthdate"
         isRequired={false}
         isReadOnly={false}
@@ -241,11 +323,13 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              loginID,
+              sub,
               name,
               email,
               bio,
               birthdate: value,
-              imagePath
+              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.birthdate ?? value;
@@ -259,7 +343,43 @@ export default function UserUpdateForm(props) {
         errorMessage={errors.birthdate?.errorMessage}
         hasError={errors.birthdate?.hasError}
         {...getOverrideProps(overrides, "birthdate")}
-      ></TextField>
+      ></TextField></VisuallyHidden>
+      {/* <TextField
+        label="Image path"
+        isRequired={false}
+        isReadOnly={false}
+        value={imagePath}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              loginID,
+              sub,
+              name,
+              email,
+              bio,
+              birthdate,
+              imagePath: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.imagePath ?? value;
+          }
+          if (errors.imagePath?.hasError) {
+            runValidationTasks("imagePath", value);
+          }
+          setImagePath(value);
+        }}
+        onBlur={() => runValidationTasks("imagePath", imagePath)}
+        errorMessage={errors.imagePath?.errorMessage}
+        hasError={errors.imagePath?.hasError}
+        {...getOverrideProps(overrides, "imagePath")}
+      ></TextField> */}
+       <FileUploader
+        acceptedFileTypes={['image/*']}
+        path="public/"
+        maxFileCount={1}
+        isResumable
+      />
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
@@ -271,7 +391,7 @@ export default function UserUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || userModelProp)}
+          isDisabled={!(idProp || currentUserModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -283,7 +403,7 @@ export default function UserUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || userModelProp) ||
+              !(idProp || currentUserModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

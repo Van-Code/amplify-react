@@ -1,6 +1,5 @@
 import {
   Card,
-  Image,
   View,
   Heading,
   Flex,
@@ -9,12 +8,12 @@ import {
   Button,
   useTheme,
 } from '@aws-amplify/ui-react';
+import {Image} from '@aws-amplify/ui-react';
+import {StorageImage} from '@aws-amplify/ui-react-storage';
+import { CurrentUser as User } from './types';
 
-export const ProfileCard = (props) => {
-  const {
-    user
-  } = props;
-
+function ProfileCard(user:User){
+ 
   const { tokens } = useTheme();
   return (
     <View
@@ -25,9 +24,11 @@ export const ProfileCard = (props) => {
         <Flex direction="column" alignItems="flex-start">
           <Image
             alt="default photo"
-            src={user.imagePath|| ""}
+            src={user.imagePath}
             width="33%"
           />
+          {/* <StorageImage alt="user profile photo" path={({ identityId }) => `protected/${identityId}/cat.jpg`} fallbackSrc="../assets/avatar.jpg"
+      onGetUrlError={(error) => console.error(error)}/>; */}
           <Flex
             direction="column"
             alignItems="flex-start"
@@ -56,3 +57,4 @@ export const ProfileCard = (props) => {
     </View>
   );
 };
+export default ProfileCard;

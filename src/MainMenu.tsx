@@ -1,7 +1,8 @@
 
 import { Menu, MenuItem, Divider} from '@aws-amplify/ui-react';
+import {SignOut} from './types';
 
-function MainMenu(props) {
+function MainMenu(props:{signOut:SignOut}) {
   const {
     signOut
   } = props;
@@ -22,7 +23,7 @@ function MainMenu(props) {
         <MenuItem isDisabled onClick={() => alert('Delete')}>
         Delete
         </MenuItem>
-        <MenuItem onClick={() => signOut()}>
+        <MenuItem onClick={() => signOut}>
         Logout
         </MenuItem>
     </Menu>

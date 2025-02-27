@@ -1,17 +1,16 @@
 
 import { Flex } from '@aws-amplify/ui-react';
-import { Image } from '../ui-components';
+import { Image } from '@aws-amplify/ui-react';
+import {StorageImage} from '@aws-amplify/ui-react-storage';
+import { CurrentUser as User } from './types';
 
-function ProfileCard(props) {
-  const {
-    user
-  } = props;
-
+function UserProfile(user:User) {
+ 
   return (
     <Flex direction="column" gap="2rem">
       <Image
         alt="Amplify logo"
-        src="/amplify-logo.svg"
+        src={user.imagePath ? user.imagePath : "../assets/avatar.jpg"}
         objectFit="initial"
         objectPosition="50% 50%"
         backgroundColor="initial"
@@ -20,10 +19,12 @@ function ProfileCard(props) {
         opacity="100%"
         onClick={() => alert('📸 Say cheese!')}
       />
-    {user.name}
+      <StorageImage alt="user profile photo" path={user.imagePath} fallbackSrc="../assets/avatar.jpg"
+      onGetUrlError={(error) => console.error(error)}/>;
+    <h3>{user.name}</h3>
     <p>{user.bio}</p>
     </Flex>
   );
 }
 
-export default ProfileCard;
+export default UserProfile;

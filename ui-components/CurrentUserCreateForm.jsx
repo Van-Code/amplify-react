@@ -4,9 +4,9 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { createUser } from "./graphql/mutations";
+import { createCurrentUser } from "./graphql/mutations";
 const client = generateClient();
-export default function UserCreateForm(props) {
+export default function CurrentUserCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -18,12 +18,16 @@ export default function UserCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    loginID: "",
+    sub: "",
     name: "",
     email: "",
     bio: "",
     birthdate: "",
-    imagePath: "./assets/avatar.jpg"
+    imagePath: "",
   };
+  const [loginID, setLoginID] = React.useState(initialValues.loginID);
+  const [sub, setSub] = React.useState(initialValues.sub);
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
   const [bio, setBio] = React.useState(initialValues.bio);
@@ -31,6 +35,8 @@ export default function UserCreateForm(props) {
   const [imagePath, setImagePath] = React.useState(initialValues.imagePath);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setLoginID(initialValues.loginID);
+    setSub(initialValues.sub);
     setName(initialValues.name);
     setEmail(initialValues.email);
     setBio(initialValues.bio);
@@ -39,11 +45,13 @@ export default function UserCreateForm(props) {
     setErrors({});
   };
   const validations = {
+    loginID: [],
+    sub: [],
     name: [],
     email: [{ type: "Email" }],
     bio: [],
     birthdate: [],
-    imagePath: []
+    imagePath: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -71,10 +79,13 @@ export default function UserCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          loginID,
+          sub,
           name,
           email,
           bio,
           birthdate,
+          imagePath,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -105,7 +116,7 @@ export default function UserCreateForm(props) {
             }
           });
           await client.graphql({
-            query: createUser.replaceAll("__typename", ""),
+            query: createCurrentUser.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -125,9 +136,69 @@ export default function UserCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserCreateForm")}
+      {...getOverrideProps(overrides, "CurrentUserCreateForm")}
       {...rest}
     >
+      <TextField
+        label="Login id"
+        isRequired={false}
+        isReadOnly={false}
+        value={loginID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              loginID: value,
+              sub,
+              name,
+              email,
+              bio,
+              birthdate,
+              imagePath,
+            };
+            const result = onChange(modelFields);
+            value = result?.loginID ?? value;
+          }
+          if (errors.loginID?.hasError) {
+            runValidationTasks("loginID", value);
+          }
+          setLoginID(value);
+        }}
+        onBlur={() => runValidationTasks("loginID", loginID)}
+        errorMessage={errors.loginID?.errorMessage}
+        hasError={errors.loginID?.hasError}
+        {...getOverrideProps(overrides, "loginID")}
+      ></TextField>
+      <TextField
+        label="Sub"
+        isRequired={false}
+        isReadOnly={false}
+        value={sub}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              loginID,
+              sub: value,
+              name,
+              email,
+              bio,
+              birthdate,
+              imagePath,
+            };
+            const result = onChange(modelFields);
+            value = result?.sub ?? value;
+          }
+          if (errors.sub?.hasError) {
+            runValidationTasks("sub", value);
+          }
+          setSub(value);
+        }}
+        onBlur={() => runValidationTasks("sub", sub)}
+        errorMessage={errors.sub?.errorMessage}
+        hasError={errors.sub?.hasError}
+        {...getOverrideProps(overrides, "sub")}
+      ></TextField>
       <TextField
         label="Name"
         isRequired={false}
@@ -137,11 +208,13 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              loginID,
+              sub,
               name: value,
               email,
               bio,
               birthdate,
-              imagePath
+              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -165,11 +238,13 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              loginID,
+              sub,
               name,
               email: value,
               bio,
               birthdate,
-              imagePath
+              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -193,11 +268,13 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              loginID,
+              sub,
               name,
               email,
               bio: value,
               birthdate,
-              imagePath
+              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.bio ?? value;
@@ -222,11 +299,13 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              loginID,
+              sub,
               name,
               email,
               bio,
               birthdate: value,
-              imagePath
+              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.birthdate ?? value;
@@ -240,6 +319,36 @@ export default function UserCreateForm(props) {
         errorMessage={errors.birthdate?.errorMessage}
         hasError={errors.birthdate?.hasError}
         {...getOverrideProps(overrides, "birthdate")}
+      ></TextField>
+      <TextField
+        label="Image path"
+        isRequired={false}
+        isReadOnly={false}
+        value={imagePath}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              loginID,
+              sub,
+              name,
+              email,
+              bio,
+              birthdate,
+              imagePath: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.imagePath ?? value;
+          }
+          if (errors.imagePath?.hasError) {
+            runValidationTasks("imagePath", value);
+          }
+          setImagePath(value);
+        }}
+        onBlur={() => runValidationTasks("imagePath", imagePath)}
+        errorMessage={errors.imagePath?.errorMessage}
+        hasError={errors.imagePath?.hasError}
+        {...getOverrideProps(overrides, "imagePath")}
       ></TextField>
       <Flex
         justifyContent="space-between"

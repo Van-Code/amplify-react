@@ -2,6 +2,27 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createCurrentUser = /* GraphQL */ `
+  mutation CreateCurrentUser(
+    $condition: ModelCurrentUserConditionInput
+    $input: CreateCurrentUserInput!
+  ) {
+    createCurrentUser(condition: $condition, input: $input) {
+      bio
+      birthdate
+      createdAt
+      email
+      id
+      imagePath
+      loginID
+      name
+      profileOwner
+      sub
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const createPost = /* GraphQL */ `
   mutation CreatePost(
     $condition: ModelPostConditionInput
@@ -17,18 +38,22 @@ export const createPost = /* GraphQL */ `
     }
   }
 `;
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $condition: ModelUserConditionInput
-    $input: CreateUserInput!
+export const deleteCurrentUser = /* GraphQL */ `
+  mutation DeleteCurrentUser(
+    $condition: ModelCurrentUserConditionInput
+    $input: DeleteCurrentUserInput!
   ) {
-    createUser(condition: $condition, input: $input) {
+    deleteCurrentUser(condition: $condition, input: $input) {
       bio
       birthdate
       createdAt
       email
       id
+      imagePath
+      loginID
       name
+      profileOwner
+      sub
       updatedAt
       __typename
     }
@@ -49,18 +74,22 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $condition: ModelUserConditionInput
-    $input: DeleteUserInput!
+export const updateCurrentUser = /* GraphQL */ `
+  mutation UpdateCurrentUser(
+    $condition: ModelCurrentUserConditionInput
+    $input: UpdateCurrentUserInput!
   ) {
-    deleteUser(condition: $condition, input: $input) {
+    updateCurrentUser(condition: $condition, input: $input) {
       bio
       birthdate
       createdAt
       email
       id
+      imagePath
+      loginID
       name
+      profileOwner
+      sub
       updatedAt
       __typename
     }
@@ -76,23 +105,6 @@ export const updatePost = /* GraphQL */ `
       createdAt
       id
       owner
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $condition: ModelUserConditionInput
-    $input: UpdateUserInput!
-  ) {
-    updateUser(condition: $condition, input: $input) {
-      bio
-      birthdate
-      createdAt
-      email
-      id
-      name
       updatedAt
       __typename
     }
