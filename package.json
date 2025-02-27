@@ -1,8 +1,20 @@
 {
-  "name": "amplify-vite-react-template",
-  "private": true,
+  "name": "amplify-react",
   "version": "0.0.0",
+  "private": true,
+  "description": "This repository provides a starter template for creating applications using React+Vite and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.",
+  "homepage": "https://github.com/Van-Code/amplify-react#readme",
+  "bugs": {
+    "url": "https://github.com/Van-Code/amplify-react/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Van-Code/amplify-react.git"
+  },
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -13,7 +25,8 @@
     "@aws-amplify/ui-react": "^6.5.5",
     "aws-amplify": "^6.6.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.2.0"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.5.0",
