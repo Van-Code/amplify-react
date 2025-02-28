@@ -6,7 +6,7 @@ import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getUser } from "./graphql/queries";
 import { updateUser } from "./graphql/mutations";
-import { StorageImage } from '@aws-amplify/ui-react-storage';
+import { FileUploader } from "@aws-amplify/ui-react-storage";
 import '@aws-amplify/ui-react/styles.css';
 const client = generateClient();
 export default function UserUpdateForm(props) {
@@ -262,6 +262,12 @@ export default function UserUpdateForm(props) {
         hasError={errors.birthdate?.hasError}
         {...getOverrideProps(overrides, "birthdate")}
       ></TextField>
+      <FileUploader
+        acceptedFileTypes={['image/*']}
+        path="public/"
+        maxFileCount={1}
+        isResumable
+      />
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
