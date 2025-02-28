@@ -10,16 +10,17 @@ import {
 } from '@aws-amplify/ui-react';
 import {Image} from '@aws-amplify/ui-react';
 // import {StorageImage} from '@aws-amplify/ui-react-storage';
-import { CurrentUser as User } from './types';
+import { ICurrentUser } from './types';
 
 type IProps = {
-  user: User
+  user: ICurrentUser
 }
 
 function ProfileCard(props:IProps){
   const {user} = props;
   const { tokens } = useTheme();
-  const imagePath = user.imagePath || '../src/assets/avatar.jpg';
+  console.log("profile",user)
+  const imagePath = user.imagePath ? user.imagePath : '../src/assets/avatar.jpg';
   return (
     <View
       backgroundColor={tokens.colors.background.secondary}

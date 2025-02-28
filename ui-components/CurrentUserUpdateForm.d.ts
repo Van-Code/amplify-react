@@ -1,7 +1,6 @@
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { CurrentUser } from "../src/types";
-
+import { CurrentUser } from "./graphql/types";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -18,8 +17,7 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type CurrentUserUpdateFormInputValues = {
-    loginID?: string;
-    sub?: string;
+   
     name?: string;
     email?: string;
     bio?: string;
@@ -27,8 +25,7 @@ export declare type CurrentUserUpdateFormInputValues = {
     imagePath?: string;
 };
 export declare type CurrentUserUpdateFormValidationValues = {
-    loginID?: ValidationFunction<string>;
-    sub?: ValidationFunction<string>;
+   
     name?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
     bio?: ValidationFunction<string>;
@@ -38,8 +35,7 @@ export declare type CurrentUserUpdateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CurrentUserUpdateFormOverridesProps = {
     CurrentUserUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    loginID?: PrimitiveOverrideProps<TextFieldProps>;
-    sub?: PrimitiveOverrideProps<TextFieldProps>;
+   
     name?: PrimitiveOverrideProps<TextFieldProps>;
     email?: PrimitiveOverrideProps<TextFieldProps>;
     bio?: PrimitiveOverrideProps<TextFieldProps>;

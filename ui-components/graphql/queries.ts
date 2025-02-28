@@ -11,7 +11,6 @@ export const getCurrentUser = /* GraphQL */ `
       email
       id
       imagePath
-      loginID
       name
       profileOwner
       sub
@@ -54,7 +53,6 @@ export const listCurrentUsers = /* GraphQL */ `
         email
         id
         imagePath
-        loginID
         name
         profileOwner
         sub

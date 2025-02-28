@@ -4,11 +4,12 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import UserView from "./UserView";
 import Feed from "./Feed";
 import MainMenu from "./MainMenu";
-import {CurrentUser, SignOut} from './types'
+import {IAuthUser, ICurrentUser, ISignOut} from './types'
 
 type IProps = {
-  currentUser: CurrentUser,
-  signOut: SignOut
+  authUser: IAuthUser
+  currentUser: ICurrentUser,
+  signOut: ISignOut
 }
 
 function App(props:IProps) {
@@ -16,15 +17,14 @@ function App(props:IProps) {
     currentUser,
     signOut
   } = props;
-
-
+// console.log(currentUser)
   return (
     <>
     <MainMenu signOut={signOut}/>
     <BrowserRouter>
       <Routes>
         <Route path="/feed" element={<Feed/> }/>
-        <Route path="/" element={<UserView user={currentUser}/>} />
+        <Route path="/" element={<UserView currentUser={currentUser}/>} />
       </Routes>
     </BrowserRouter>
     </>
