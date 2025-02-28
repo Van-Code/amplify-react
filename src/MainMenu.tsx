@@ -2,7 +2,11 @@
 import { Menu, MenuItem, Divider} from '@aws-amplify/ui-react';
 import {SignOut} from './types';
 
-function MainMenu(props:{signOut:SignOut}) {
+type IProps = {
+  signOut: SignOut
+}
+
+function MainMenu(props:IProps) {
   const {
     signOut
   } = props;
