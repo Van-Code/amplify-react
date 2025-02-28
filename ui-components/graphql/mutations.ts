@@ -14,7 +14,6 @@ export const createCurrentUser = /* GraphQL */ `
       email
       id
       imagePath
-      loginID
       name
       profileOwner
       sub
@@ -50,7 +49,6 @@ export const deleteCurrentUser = /* GraphQL */ `
       email
       id
       imagePath
-      loginID
       name
       profileOwner
       sub
@@ -86,7 +84,6 @@ export const updateCurrentUser = /* GraphQL */ `
       email
       id
       imagePath
-      loginID
       name
       profileOwner
       sub

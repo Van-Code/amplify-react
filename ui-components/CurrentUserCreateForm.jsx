@@ -18,16 +18,12 @@ export default function CurrentUserCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    loginID: "",
-    sub: "",
     name: "",
     email: "",
     bio: "",
     birthdate: "",
     imagePath: "",
   };
-  const [loginID, setLoginID] = React.useState(initialValues.loginID);
-  const [sub, setSub] = React.useState(initialValues.sub);
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
   const [bio, setBio] = React.useState(initialValues.bio);
@@ -35,8 +31,6 @@ export default function CurrentUserCreateForm(props) {
   const [imagePath, setImagePath] = React.useState(initialValues.imagePath);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setLoginID(initialValues.loginID);
-    setSub(initialValues.sub);
     setName(initialValues.name);
     setEmail(initialValues.email);
     setBio(initialValues.bio);
@@ -45,8 +39,6 @@ export default function CurrentUserCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    loginID: [],
-    sub: [],
     name: [],
     email: [{ type: "Email" }],
     bio: [],
@@ -79,8 +71,6 @@ export default function CurrentUserCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          loginID,
-          sub,
           name,
           email,
           bio,
@@ -139,66 +129,7 @@ export default function CurrentUserCreateForm(props) {
       {...getOverrideProps(overrides, "CurrentUserCreateForm")}
       {...rest}
     >
-      <TextField
-        label="Login id"
-        isRequired={false}
-        isReadOnly={false}
-        value={loginID}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              loginID: value,
-              sub,
-              name,
-              email,
-              bio,
-              birthdate,
-              imagePath,
-            };
-            const result = onChange(modelFields);
-            value = result?.loginID ?? value;
-          }
-          if (errors.loginID?.hasError) {
-            runValidationTasks("loginID", value);
-          }
-          setLoginID(value);
-        }}
-        onBlur={() => runValidationTasks("loginID", loginID)}
-        errorMessage={errors.loginID?.errorMessage}
-        hasError={errors.loginID?.hasError}
-        {...getOverrideProps(overrides, "loginID")}
-      ></TextField>
-      <TextField
-        label="Sub"
-        isRequired={false}
-        isReadOnly={false}
-        value={sub}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              loginID,
-              sub: value,
-              name,
-              email,
-              bio,
-              birthdate,
-              imagePath,
-            };
-            const result = onChange(modelFields);
-            value = result?.sub ?? value;
-          }
-          if (errors.sub?.hasError) {
-            runValidationTasks("sub", value);
-          }
-          setSub(value);
-        }}
-        onBlur={() => runValidationTasks("sub", sub)}
-        errorMessage={errors.sub?.errorMessage}
-        hasError={errors.sub?.hasError}
-        {...getOverrideProps(overrides, "sub")}
-      ></TextField>
+      
       <TextField
         label="Name"
         isRequired={false}
@@ -208,8 +139,7 @@ export default function CurrentUserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              loginID,
-              sub,
+            
               name: value,
               email,
               bio,
@@ -238,8 +168,6 @@ export default function CurrentUserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              loginID,
-              sub,
               name,
               email: value,
               bio,
@@ -268,8 +196,7 @@ export default function CurrentUserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              loginID,
-              sub,
+            
               name,
               email,
               bio: value,
@@ -299,8 +226,7 @@ export default function CurrentUserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              loginID,
-              sub,
+            
               name,
               email,
               bio,
@@ -329,8 +255,7 @@ export default function CurrentUserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              loginID,
-              sub,
+            
               name,
               email,
               bio,
