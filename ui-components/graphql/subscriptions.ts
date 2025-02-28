@@ -2,6 +2,27 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateCurrentUser = /* GraphQL */ `
+  subscription OnCreateCurrentUser(
+    $filter: ModelSubscriptionCurrentUserFilterInput
+    $profileOwner: String
+  ) {
+    onCreateCurrentUser(filter: $filter, profileOwner: $profileOwner) {
+      bio
+      birthdate
+      createdAt
+      email
+      id
+      imagePath
+      loginID
+      name
+      profileOwner
+      sub
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost(
     $filter: ModelSubscriptionPostFilterInput
@@ -17,15 +38,22 @@ export const onCreatePost = /* GraphQL */ `
     }
   }
 `;
-export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
-    onCreateUser(filter: $filter) {
+export const onDeleteCurrentUser = /* GraphQL */ `
+  subscription OnDeleteCurrentUser(
+    $filter: ModelSubscriptionCurrentUserFilterInput
+    $profileOwner: String
+  ) {
+    onDeleteCurrentUser(filter: $filter, profileOwner: $profileOwner) {
       bio
       birthdate
       createdAt
       email
       id
+      imagePath
+      loginID
       name
+      profileOwner
+      sub
       updatedAt
       __typename
     }
@@ -46,15 +74,22 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
-    onDeleteUser(filter: $filter) {
+export const onUpdateCurrentUser = /* GraphQL */ `
+  subscription OnUpdateCurrentUser(
+    $filter: ModelSubscriptionCurrentUserFilterInput
+    $profileOwner: String
+  ) {
+    onUpdateCurrentUser(filter: $filter, profileOwner: $profileOwner) {
       bio
       birthdate
       createdAt
       email
       id
+      imagePath
+      loginID
       name
+      profileOwner
+      sub
       updatedAt
       __typename
     }
@@ -70,20 +105,6 @@ export const onUpdatePost = /* GraphQL */ `
       createdAt
       id
       owner
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
-    onUpdateUser(filter: $filter) {
-      bio
-      birthdate
-      createdAt
-      email
-      id
-      name
       updatedAt
       __typename
     }

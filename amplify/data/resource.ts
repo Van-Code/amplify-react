@@ -9,13 +9,12 @@ const schema = a.schema({
   CurrentUser: a
     .model({
       id: a.id(),
-      loginID: a.string(),
       sub: a.string(),
       name: a.string(),   
       email: a.email(),
       bio: a.string(),
       birthdate: a.date(),
-      imagePath: a.string()
+      imagePath: a.string().default('./src/assets/avatar.jpg')
     })
     .authorization((allow) => [
       allow.ownerDefinedIn("profileOwner"), 

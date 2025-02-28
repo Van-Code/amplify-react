@@ -5,6 +5,7 @@ import UserView from "./UserView";
 import Feed from "./Feed";
 import MainMenu from "./MainMenu";
 
+
 function App(props) {
   const {
     currentUser,
@@ -17,8 +18,8 @@ function App(props) {
     <MainMenu signOut={signOut}/>
     <BrowserRouter>
       <Routes>
-        <Route  path="/feed" element={<Feed/> }/>
-        <Route  path="/" element={<UserView currentUser={currentUser}/>} />
+        <Route path="/feed" element={<Feed/> }/>
+        <Route path="/" element={<UserView user={currentUser}/>} />
       </Routes>
     </BrowserRouter>
     </>

@@ -1,11 +1,9 @@
-import { UserUpdateForm } from '../ui-components';
+import { CurrentUserUpdateForm } from '../ui-components';
 import { Tabs } from '@aws-amplify/ui-react';
-import {ProfileCard} from './ProfileCard';
+import ProfileCard from './ProfileCard';
+import { CurrentUser as User } from './types';
 
-function UserView(props) {
-  const {
-    currentUser
-  } = props;
+function UserView(user:User) {
 
 
   return (
@@ -15,8 +13,8 @@ function UserView(props) {
         <Tabs.Item value="1">Update</Tabs.Item>
         <Tabs.Item value="2">View</Tabs.Item>
       </Tabs.List>
-      <Tabs.Panel value="1"><UserUpdateForm id={currentUser?.signInDetails?.loginId} user={currentUser}/></Tabs.Panel>
-      <Tabs.Panel value="2"><ProfileCard currentUser={currentUser}/></Tabs.Panel>
+      <Tabs.Panel value="1"><CurrentUserUpdateForm id={user?.signInDetails?.loginId} user={user}/></Tabs.Panel>
+      <Tabs.Panel value="2"><ProfileCard user={user}/></Tabs.Panel>
     </Tabs.Container>
      
   );

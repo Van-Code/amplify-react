@@ -1,13 +1,11 @@
 
 import { Flex } from '@aws-amplify/ui-react';
-import { Image } from '../ui-components';
+import { Image } from '@aws-amplify/ui-react';
 import {StorageImage} from '@aws-amplify/ui-react-storage';
+import { CurrentUser as User } from './types';
 
-function ProfileCard(props) {
-  const {
-    user
-  } = props;
-
+function UserProfile(user:User) {
+ 
   return (
     <Flex direction="column" gap="2rem">
       <Image
@@ -23,10 +21,10 @@ function ProfileCard(props) {
       />
       <StorageImage alt="user profile photo" path={user.imagePath} fallbackSrc="../assets/avatar.jpg"
       onGetUrlError={(error) => console.error(error)}/>;
-    {user.name}
+    <h3>{user.name}</h3>
     <p>{user.bio}</p>
     </Flex>
   );
 }
 
-export default ProfileCard;
+export default UserProfile;
