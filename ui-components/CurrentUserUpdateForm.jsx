@@ -6,8 +6,6 @@ import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getCurrentUser } from "./graphql/queries";
 import { updateCurrentUser } from "./graphql/mutations";
-import { FileUploader } from '@aws-amplify/ui-react-storage';
-import '@aws-amplify/ui-react/styles.css';
 const client = generateClient();
 export default function CurrentUserUpdateForm(props) {
   const {
@@ -63,7 +61,6 @@ export default function CurrentUserUpdateForm(props) {
   }, [idProp, currentUserModelProp]);
   React.useEffect(resetStateValues, [currentUserRecord]);
   const validations = {
-  
     name: [],
     email: [{ type: "Email" }],
     bio: [],
@@ -152,7 +149,6 @@ export default function CurrentUserUpdateForm(props) {
       {...getOverrideProps(overrides, "CurrentUserUpdateForm")}
       {...rest}
     >
-     
       <TextField
         label="Name"
         isRequired={false}
@@ -162,7 +158,6 @@ export default function CurrentUserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-         
               name: value,
               email,
               bio,
@@ -191,7 +186,6 @@ export default function CurrentUserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-          
               name,
               email: value,
               bio,
@@ -220,7 +214,6 @@ export default function CurrentUserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-            
               name,
               email,
               bio: value,
@@ -250,7 +243,6 @@ export default function CurrentUserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              
               name,
               email,
               bio,
@@ -270,7 +262,7 @@ export default function CurrentUserUpdateForm(props) {
         hasError={errors.birthdate?.hasError}
         {...getOverrideProps(overrides, "birthdate")}
       ></TextField>
-      {/* <TextField
+      <TextField
         label="Image path"
         isRequired={false}
         isReadOnly={false}
@@ -279,7 +271,6 @@ export default function CurrentUserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-         
               name,
               email,
               bio,
@@ -298,13 +289,7 @@ export default function CurrentUserUpdateForm(props) {
         errorMessage={errors.imagePath?.errorMessage}
         hasError={errors.imagePath?.hasError}
         {...getOverrideProps(overrides, "imagePath")}
-      ></TextField> */}
-      <FileUploader
-      acceptedFileTypes={['image/*']}
-      path="public/"
-      maxFileCount={1}
-      isResumable
-    />
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

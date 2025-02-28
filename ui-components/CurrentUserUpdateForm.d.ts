@@ -17,7 +17,6 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type CurrentUserUpdateFormInputValues = {
-   
     name?: string;
     email?: string;
     bio?: string;
@@ -25,7 +24,6 @@ export declare type CurrentUserUpdateFormInputValues = {
     imagePath?: string;
 };
 export declare type CurrentUserUpdateFormValidationValues = {
-   
     name?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
     bio?: ValidationFunction<string>;
@@ -35,7 +33,6 @@ export declare type CurrentUserUpdateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CurrentUserUpdateFormOverridesProps = {
     CurrentUserUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-   
     name?: PrimitiveOverrideProps<TextFieldProps>;
     email?: PrimitiveOverrideProps<TextFieldProps>;
     bio?: PrimitiveOverrideProps<TextFieldProps>;

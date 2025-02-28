@@ -16,7 +16,6 @@ export const createCurrentUser = /* GraphQL */ `
       imagePath
       name
       profileOwner
-      sub
       updatedAt
       __typename
     }
@@ -51,7 +50,6 @@ export const deleteCurrentUser = /* GraphQL */ `
       imagePath
       name
       profileOwner
-      sub
       updatedAt
       __typename
     }
@@ -86,7 +84,6 @@ export const updateCurrentUser = /* GraphQL */ `
       imagePath
       name
       profileOwner
-      sub
       updatedAt
       __typename
     }

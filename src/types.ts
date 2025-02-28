@@ -1,6 +1,5 @@
 export type IUser = {
     id: string;
-    name?: string;
     email?: string;
     bio?: string;
     imagePath?: string | null;
@@ -11,12 +10,12 @@ export interface IAuthUser extends IUser {
         authFlowType: string;
     }
     userId: string,
-    username: string,
+    sub: string;
 }
 
 export interface ICurrentUser extends IAuthUser {
-    email?: string;
     birthdate?: string;
+    name?: string;
 }
 
 export type ISignOut = {

@@ -13,7 +13,6 @@ export const getCurrentUser = /* GraphQL */ `
       imagePath
       name
       profileOwner
-      sub
       updatedAt
       __typename
     }
@@ -34,18 +33,10 @@ export const getPost = /* GraphQL */ `
 export const listCurrentUsers = /* GraphQL */ `
   query ListCurrentUsers(
     $filter: ModelCurrentUserFilterInput
-    $id: ID
     $limit: Int
     $nextToken: String
-    $sortDirection: ModelSortDirection
   ) {
-    listCurrentUsers(
-      filter: $filter
-      id: $id
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
+    listCurrentUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         bio
         birthdate
@@ -55,7 +46,6 @@ export const listCurrentUsers = /* GraphQL */ `
         imagePath
         name
         profileOwner
-        sub
         updatedAt
         __typename
       }

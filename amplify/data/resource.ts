@@ -8,6 +8,7 @@ const schema = a.schema({
   .authorization(allow => [allow.owner()]),
   CurrentUser: a
     .model({
+      id: a.string().required(),
       name: a.string(),   
       email: a.email(),
       bio: a.string(),

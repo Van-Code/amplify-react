@@ -1,8 +1,8 @@
 
 import { Flex } from '@aws-amplify/ui-react';
 import { Image } from '@aws-amplify/ui-react';
-import {StorageImage} from '@aws-amplify/ui-react-storage';
-import { CurrentUser as User } from './types';
+// import {StorageImage} from '@aws-amplify/ui-react-storage';
+import { ICurrentUser as User } from './types';
 
 function UserProfile(user:User) {
  
@@ -19,8 +19,8 @@ function UserProfile(user:User) {
         opacity="100%"
         onClick={() => alert('📸 Say cheese!')}
       />
-      <StorageImage alt="user profile photo" path={user.imagePath} fallbackSrc="../assets/avatar.jpg"
-      onGetUrlError={(error) => console.error(error)}/>;
+      {/* <StorageImage alt="user profile photo" path={user.imagePath} fallbackSrc="../assets/avatar.jpg"
+      onGetUrlError={(error) => console.error(error)}/>; */}
     <h3>{user.name}</h3>
     <p>{user.bio}</p>
     </Flex>

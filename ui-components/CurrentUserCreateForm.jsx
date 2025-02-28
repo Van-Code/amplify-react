@@ -129,7 +129,6 @@ export default function CurrentUserCreateForm(props) {
       {...getOverrideProps(overrides, "CurrentUserCreateForm")}
       {...rest}
     >
-      
       <TextField
         label="Name"
         isRequired={false}
@@ -139,7 +138,6 @@ export default function CurrentUserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-            
               name: value,
               email,
               bio,
@@ -196,7 +194,6 @@ export default function CurrentUserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-            
               name,
               email,
               bio: value,
@@ -226,7 +223,6 @@ export default function CurrentUserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-            
               name,
               email,
               bio,
@@ -255,7 +251,6 @@ export default function CurrentUserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-            
               name,
               email,
               bio,
