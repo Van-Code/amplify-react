@@ -13,6 +13,6 @@ export type CurrentUser = {
     birthdate?: string;
     imagePath?: string | null;
 }
-export type SignOut ={
+export type SignOut = {
     signOut: () => void;
   }

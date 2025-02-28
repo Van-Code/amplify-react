@@ -9,12 +9,17 @@ import {
   useTheme,
 } from '@aws-amplify/ui-react';
 import {Image} from '@aws-amplify/ui-react';
-import {StorageImage} from '@aws-amplify/ui-react-storage';
+// import {StorageImage} from '@aws-amplify/ui-react-storage';
 import { CurrentUser as User } from './types';
 
-function ProfileCard(user:User){
- 
+type IProps = {
+  user: User
+}
+
+function ProfileCard(props:IProps){
+  const {user} = props;
   const { tokens } = useTheme();
+  const imagePath = user.imagePath || '../src/assets/avatar.jpg';
   return (
     <View
       backgroundColor={tokens.colors.background.secondary}
@@ -24,7 +29,7 @@ function ProfileCard(user:User){
         <Flex direction="column" alignItems="flex-start">
           <Image
             alt="default photo"
-            src={user.imagePath}
+            src={imagePath}
             width="33%"
           />
           {/* <StorageImage alt="user profile photo" path={({ identityId }) => `protected/${identityId}/cat.jpg`} fallbackSrc="../assets/avatar.jpg"

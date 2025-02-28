@@ -4,9 +4,14 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import UserView from "./UserView";
 import Feed from "./Feed";
 import MainMenu from "./MainMenu";
+import {CurrentUser, SignOut} from './types'
 
+type IProps = {
+  currentUser: CurrentUser,
+  signOut: SignOut
+}
 
-function App(props) {
+function App(props:IProps) {
   const {
     currentUser,
     signOut

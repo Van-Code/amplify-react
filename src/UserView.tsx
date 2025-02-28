@@ -3,8 +3,11 @@ import { Tabs } from '@aws-amplify/ui-react';
 import ProfileCard from './ProfileCard';
 import { CurrentUser as User } from './types';
 
-function UserView(user:User) {
-
+type IProps = {
+  user: User
+}
+function UserView(props:IProps) {
+  const {user} = props;
 
   return (
     
