@@ -6,14 +6,14 @@ const schema = a.schema({
     content: a.string(),
   })
   .authorization(allow => [allow.owner()]),
-  CurrentUser: a
+  User: a
     .model({
       id: a.string().required(),
       name: a.string(),   
       email: a.email(),
       bio: a.string(),
       birthdate: a.date(),
-      imagePath: a.string().default('./src/assets/avatar.jpg')
+      imagePath: a.string().default('./src/assets/avatar.jpg'),
     })
     .authorization((allow) => [
       allow.ownerDefinedIn("profileOwner"), 

@@ -4,27 +4,21 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import UserView from "./UserView";
 import Feed from "./Feed";
 import MainMenu from "./MainMenu";
-import {IAuthUser, ICurrentUser, ISignOut} from './types'
 
 type IProps = {
-  authUser: IAuthUser
-  currentUser: ICurrentUser,
-  signOut: ISignOut
+  loginId: string | undefined
 }
-
 function App(props:IProps) {
-  const {
-    currentUser,
-    signOut
-  } = props;
-// console.log(currentUser)
+
   return (
     <>
-    <MainMenu signOut={signOut}/>
+    <MainMenu/>
     <BrowserRouter>
       <Routes>
         <Route path="/feed" element={<Feed/> }/>
-        <Route path="/" element={<UserView currentUser={currentUser}/>} />
+        {props.loginId &&
+          <Route path="/" element={<UserView loginId={props.loginId}/>} />
+        }
       </Routes>
     </BrowserRouter>
     </>

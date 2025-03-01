@@ -12,14 +12,13 @@ import outputs from "../amplify_outputs.json";
 
 Amplify.configure(outputs);
 
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
       <Authenticator>
-      {({ signOut, user }) => (
-          <App currentUser={user} signOut={signOut}/>
-        )}
+      {({ user }) => (
+          <App loginId={user?.signInDetails?.loginId}/>
+      )}
       </Authenticator>
     </ThemeProvider>
   </React.StrictMode>

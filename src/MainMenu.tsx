@@ -1,17 +1,11 @@
 
 import { Menu, MenuItem, Divider} from '@aws-amplify/ui-react';
-import {ISignOut} from './types';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
-type IProps = {
-  signOut: ISignOut
-}
+function MainMenu() {
 
-function MainMenu(props:IProps) {
-  const {
-    signOut
-  } = props;
-
-
+  const { signOut } = useAuthenticator();
+  
   return (
     <Menu menuAlign="start">
         <MenuItem onClick={() => alert('Download')}>

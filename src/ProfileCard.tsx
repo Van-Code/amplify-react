@@ -7,20 +7,15 @@ import {
   Text,
   Button,
   useTheme,
+  Image
 } from '@aws-amplify/ui-react';
-import {Image} from '@aws-amplify/ui-react';
 // import {StorageImage} from '@aws-amplify/ui-react-storage';
-import { ICurrentUser } from './types';
+import {IUser} from './types';
 
-type IProps = {
-  user: ICurrentUser
-}
 
-function ProfileCard(props:IProps){
-  const {user} = props;
+function ProfileCard(user:IUser){
   const { tokens } = useTheme();
-  console.log("profile",user)
-  const imagePath = user.imagePath ? user.imagePath : '../src/assets/avatar.jpg';
+  const imagePath = user?.imagePath;
   return (
     <View
       backgroundColor={tokens.colors.background.secondary}

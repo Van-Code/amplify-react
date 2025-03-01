@@ -503,7 +503,7 @@ export const useAuth = () => {
     isLoading: true,
     user: undefined,
   });
-  const fetchCurrentUserAttributes = React.useCallback(async () => {
+  const fetchUserAttributes = React.useCallback(async () => {
     setResult((prevResult) => ({ ...prevResult, isLoading: true }));
     try {
       const attributes = await fetchUserAttributes();
@@ -519,7 +519,7 @@ export const useAuth = () => {
         case "signUp":
         case "tokenRefresh":
         case "autoSignIn": {
-          fetchCurrentUserAttributes();
+          fetchUserAttributes();
           break;
         }
         case "signedOut": {
@@ -540,13 +540,13 @@ export const useAuth = () => {
         }
       }
     },
-    [fetchCurrentUserAttributes]
+    [fetchUserAttributes]
   );
   React.useEffect(() => {
     const unsubscribe = Hub.listen("auth", handleAuth, "useAuth");
-    fetchCurrentUserAttributes();
+    fetchUserAttributes();
     return unsubscribe;
-  }, [handleAuth, fetchCurrentUserAttributes]);
+  }, [handleAuth, fetchUserAttributes]);
   return {
     ...result,
   };
@@ -728,18 +728,18 @@ const checkValidation = (value, validation) => {
   }
 };
 const monthToShortMon = {
-  "1": "Jan",
-  "2": "Feb",
-  "3": "Mar",
-  "4": "Apr",
-  "5": "May",
-  "6": "Jun",
-  "7": "Jul",
-  "8": "Aug",
-  "9": "Sep",
-  "10": "Oct",
-  "11": "Nov",
-  "12": "Dec",
+  1: "Jan",
+  2: "Feb",
+  3: "Mar",
+  4: "Apr",
+  5: "May",
+  6: "Jun",
+  7: "Jul",
+  8: "Aug",
+  9: "Sep",
+  10: "Oct",
+  11: "Nov",
+  12: "Dec",
 };
 const invalidDateStr = "Invalid Date";
 export function formatDate(date, dateFormat) {

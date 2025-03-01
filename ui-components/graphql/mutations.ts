@@ -2,12 +2,12 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createCurrentUser = /* GraphQL */ `
-  mutation CreateCurrentUser(
-    $condition: ModelCurrentUserConditionInput
-    $input: CreateCurrentUserInput!
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $condition: ModelUserConditionInput
+    $input: CreateUserInput!
   ) {
-    createCurrentUser(condition: $condition, input: $input) {
+    createUser(condition: $condition, input: $input) {
       bio
       birthdate
       createdAt
@@ -36,12 +36,12 @@ export const createPost = /* GraphQL */ `
     }
   }
 `;
-export const deleteCurrentUser = /* GraphQL */ `
-  mutation DeleteCurrentUser(
-    $condition: ModelCurrentUserConditionInput
-    $input: DeleteCurrentUserInput!
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $condition: ModelUserConditionInput
+    $input: DeleteUserInput!
   ) {
-    deleteCurrentUser(condition: $condition, input: $input) {
+    deleteUser(condition: $condition, input: $input) {
       bio
       birthdate
       createdAt
@@ -70,12 +70,12 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
-export const updateCurrentUser = /* GraphQL */ `
-  mutation UpdateCurrentUser(
-    $condition: ModelCurrentUserConditionInput
-    $input: UpdateCurrentUserInput!
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $condition: ModelUserConditionInput
+    $input: UpdateUserInput!
   ) {
-    updateCurrentUser(condition: $condition, input: $input) {
+    updateUser(condition: $condition, input: $input) {
       bio
       birthdate
       createdAt

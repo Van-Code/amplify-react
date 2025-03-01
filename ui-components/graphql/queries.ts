@@ -2,9 +2,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getCurrentUser = /* GraphQL */ `
-  query GetCurrentUser($id: ID!) {
-    getCurrentUser(id: $id) {
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
       bio
       birthdate
       createdAt
@@ -30,13 +30,13 @@ export const getPost = /* GraphQL */ `
     }
   }
 `;
-export const listCurrentUsers = /* GraphQL */ `
-  query ListCurrentUsers(
-    $filter: ModelCurrentUserFilterInput
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCurrentUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         bio
         birthdate
