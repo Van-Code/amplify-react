@@ -13,7 +13,6 @@ const schema = a.schema({
       email: a.email(),
       bio: a.string(),
       birthdate: a.date(),
-      imagePath: a.string().default('./src/assets/avatar.jpg'),
     })
     .authorization((allow) => [
       allow.ownerDefinedIn("profileOwner"), 

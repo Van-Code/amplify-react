@@ -14,14 +14,11 @@ function MainMenu() {
         <MenuItem onClick={() => alert('Create a Copy')}>
         Profile
         </MenuItem>
-        <MenuItem onClick={() => alert('Mark as Draft')}>
-        Mark as Draft
+        <MenuItem onClick={() => alert('Account')}>
+        Account
         </MenuItem>
         <Divider />
-        <MenuItem isDisabled onClick={() => alert('Delete')}>
-        Delete
-        </MenuItem>
-        <MenuItem onClick={() => signOut}>
+        <MenuItem onClick={() => signOut()}>
         Logout
         </MenuItem>
     </Menu>

@@ -9,7 +9,7 @@ type IProps = {
   loginId: string | undefined
 }
 function App(props:IProps) {
-
+  
   return (
     <>
     <MainMenu/>

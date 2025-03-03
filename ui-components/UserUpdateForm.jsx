@@ -7,9 +7,13 @@ import { generateClient } from "aws-amplify/api";
 import { getUser } from "./graphql/queries";
 import { updateUser } from "./graphql/mutations";
 import { VisuallyHidden } from '@aws-amplify/ui-react';
-import { uploadData } from 'aws-amplify/storage';
+import  PhotoUploader  from '../src/PhotoUploader';
+import '@aws-amplify/ui-react/styles.css';
+
 
 const client = generateClient();
+
+
 export default function UserUpdateForm(props) {
   const {
     id: idProp,
@@ -29,7 +33,6 @@ export default function UserUpdateForm(props) {
     email: "",
     bio: "",
     birthdate: "",
-    imagePath: "../assets/avatar.jpg",
   };
   const [loginID, setLoginID] = React.useState(initialValues.loginID);
   const [sub, setSub] = React.useState(initialValues.sub);
@@ -37,7 +40,6 @@ export default function UserUpdateForm(props) {
   const [email, setEmail] = React.useState(initialValues.email);
   const [bio, setBio] = React.useState(initialValues.bio);
   const [birthdate, setBirthdate] = React.useState(initialValues.birthdate);
-  const [imagePath, setImagePath] = React.useState(initialValues.imagePath);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = currentUserRecord
@@ -49,7 +51,6 @@ export default function UserUpdateForm(props) {
     setEmail(cleanValues.email);
     setBio(cleanValues.bio);
     setBirthdate(cleanValues.birthdate);
-    setImagePath(cleanValues.imagePath);
     setErrors({});
   };
   const [currentUserRecord, setUserRecord] =
@@ -76,7 +77,6 @@ export default function UserUpdateForm(props) {
     email: [{ type: "Email" }],
     bio: [],
     birthdate: [],
-    imagePath: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -95,20 +95,16 @@ export default function UserUpdateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
-  const [file, setFile] = React.useState();
-
-  const handleChange = (event) => {
-    setFile(event.target.files?.[0]);
-  };
-  const handleClick = () => {
-    if (!file) {
-      return;
+  
+    const createUser = async () => {
+      await client.models.User.create({
+        email: email ?? null,
+        name: name ?? null,
+        bio: bio ?? null,
+      })
     }
-    uploadData({
-      path: `picture-submissions/${file.name}`,
-      data: file,
-    });
-  };
+  
+
   return (
     <Grid
       as="form"
@@ -124,7 +120,6 @@ export default function UserUpdateForm(props) {
           email: email ?? null,
           bio: bio ?? null,
           birthdate: birthdate ?? null,
-          imagePath: imagePath ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -190,8 +185,7 @@ export default function UserUpdateForm(props) {
               name,
               email,
               bio,
-              birthdate,
-              imagePath,
+              birthdate
             };
             const result = onChange(modelFields);
             value = result?.loginID ?? value;
@@ -220,8 +214,7 @@ export default function UserUpdateForm(props) {
               name,
               email,
               bio,
-              birthdate,
-              imagePath,
+              birthdate
             };
             const result = onChange(modelFields);
             value = result?.sub ?? value;
@@ -237,6 +230,7 @@ export default function UserUpdateForm(props) {
         {...getOverrideProps(overrides, "sub")}
       ></TextField>
       </VisuallyHidden>
+      <PhotoUploader/>
       <TextField
         label="Name"
         isRequired={false}
@@ -251,8 +245,7 @@ export default function UserUpdateForm(props) {
               name: value,
               email,
               bio,
-              birthdate,
-              imagePath,
+              birthdate
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -281,8 +274,7 @@ export default function UserUpdateForm(props) {
               name,
               email: value,
               bio,
-              birthdate,
-              imagePath,
+              birthdate
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -311,8 +303,7 @@ export default function UserUpdateForm(props) {
               name,
               email,
               bio: value,
-              birthdate,
-              imagePath,
+              birthdate
             };
             const result = onChange(modelFields);
             value = result?.bio ?? value;
@@ -343,7 +334,6 @@ export default function UserUpdateForm(props) {
               email,
               bio,
               birthdate: value,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.birthdate ?? value;
@@ -358,67 +348,7 @@ export default function UserUpdateForm(props) {
         hasError={errors.birthdate?.hasError}
         {...getOverrideProps(overrides, "birthdate")}
       ></TextField></VisuallyHidden>
-      {/* <TextField
-        label="Image path"
-        isRequired={false}
-        isReadOnly={false}
-        value={imagePath}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              loginID,
-              sub,
-              name,
-              email,
-              bio,
-              birthdate,
-              imagePath: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.imagePath ?? value;
-          }
-          if (errors.imagePath?.hasError) {
-            runValidationTasks("imagePath", value);
-          }
-          setImagePath(value);
-        }}
-        onBlur={() => runValidationTasks("imagePath", imagePath)}
-        errorMessage={errors.imagePath?.errorMessage}
-        hasError={errors.imagePath?.hasError}
-        {...getOverrideProps(overrides, "imagePath")}
-      ></TextField> */}
-       {/* <FileUploader
-        acceptedFileTypes={['image/*']}
-        path="public/"
-        maxFileCount={3}
-        isResumable
-      /> */}
-      <input type="file"
-       onChange={(e) => {
-        let { value } = e.target;
-        if (onChange) {
-          const modelFields = {
-            loginID,
-            sub,
-            name,
-            email,
-            bio,
-            birthdate,
-            imagePath: value,
-          };
-          const result = onChange(modelFields);
-          value = result?.imagePath ?? value;
-        }
-        if (errors.imagePath?.hasError) {
-          runValidationTasks("imagePath", value);
-        }
-        setImagePath(value);
-      }}
-      onBlur={() => runValidationTasks("imagePath", imagePath)}
-      errorMessage={errors.imagePath?.errorMessage}
-      hasError={errors.imagePath?.hasError}
-      {...getOverrideProps(overrides, "imagePath")}/>
+   
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
@@ -441,12 +371,13 @@ export default function UserUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
+            onSubmit={createUser}
             isDisabled={
               !(idProp || currentUserModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}
-            onClick={handleClick}
+           
           ></Button>
         </Flex>
       </Flex>

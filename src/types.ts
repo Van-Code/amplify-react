@@ -1,7 +1,6 @@
 interface IBaseUser {
     email: string;
     bio: string;
-    imagePath: string | undefined;
 }
 export interface ILoginId {
     loginId: string;

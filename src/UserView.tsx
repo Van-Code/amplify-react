@@ -14,7 +14,6 @@ function UserView(props:IProps) {
     email: props.loginId,
     bio: "",
     birthdate: "",
-    imagePath: "../src/assets/avatar.jpg",
   };
 
   const user = initialValues;
@@ -30,7 +29,7 @@ function UserView(props:IProps) {
       padding={tokens.space.medium}
     ><Card>
       <Flex direction="column" alignItems="flex-start">
-        <UserUpdateForm/>
+        <UserUpdateForm id={props.loginId} />
         </Flex>
       </Card></View>
       </Tabs.Panel>

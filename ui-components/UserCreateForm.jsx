@@ -24,7 +24,6 @@ export default function UserCreateForm(props) {
     email: "",
     bio: "",
     birthdate: "",
-    imagePath: "",
   };
   const [loginID, setLoginID] = React.useState(initialValues.loginID);
   const [sub, setSub] = React.useState(initialValues.sub);
@@ -32,7 +31,6 @@ export default function UserCreateForm(props) {
   const [email, setEmail] = React.useState(initialValues.email);
   const [bio, setBio] = React.useState(initialValues.bio);
   const [birthdate, setBirthdate] = React.useState(initialValues.birthdate);
-  const [imagePath, setImagePath] = React.useState(initialValues.imagePath);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setLoginID(initialValues.loginID);
@@ -41,7 +39,6 @@ export default function UserCreateForm(props) {
     setEmail(initialValues.email);
     setBio(initialValues.bio);
     setBirthdate(initialValues.birthdate);
-    setImagePath(initialValues.imagePath);
     setErrors({});
   };
   const validations = {
@@ -51,7 +48,6 @@ export default function UserCreateForm(props) {
     email: [{ type: "Email" }],
     bio: [],
     birthdate: [],
-    imagePath: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -85,7 +81,6 @@ export default function UserCreateForm(props) {
           email,
           bio,
           birthdate,
-          imagePath,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -154,7 +149,6 @@ export default function UserCreateForm(props) {
               email,
               bio,
               birthdate,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.loginID ?? value;
@@ -184,7 +178,6 @@ export default function UserCreateForm(props) {
               email,
               bio,
               birthdate,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.sub ?? value;
@@ -214,7 +207,6 @@ export default function UserCreateForm(props) {
               email,
               bio,
               birthdate,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -244,7 +236,6 @@ export default function UserCreateForm(props) {
               email: value,
               bio,
               birthdate,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -274,7 +265,6 @@ export default function UserCreateForm(props) {
               email,
               bio: value,
               birthdate,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.bio ?? value;
@@ -305,7 +295,6 @@ export default function UserCreateForm(props) {
               email,
               bio,
               birthdate: value,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.birthdate ?? value;
@@ -319,36 +308,6 @@ export default function UserCreateForm(props) {
         errorMessage={errors.birthdate?.errorMessage}
         hasError={errors.birthdate?.hasError}
         {...getOverrideProps(overrides, "birthdate")}
-      ></TextField>
-      <TextField
-        label="Image path"
-        isRequired={false}
-        isReadOnly={false}
-        value={imagePath}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              loginID,
-              sub,
-              name,
-              email,
-              bio,
-              birthdate,
-              imagePath: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.imagePath ?? value;
-          }
-          if (errors.imagePath?.hasError) {
-            runValidationTasks("imagePath", value);
-          }
-          setImagePath(value);
-        }}
-        onBlur={() => runValidationTasks("imagePath", imagePath)}
-        errorMessage={errors.imagePath?.errorMessage}
-        hasError={errors.imagePath?.hasError}
-        {...getOverrideProps(overrides, "imagePath")}
       ></TextField>
       <Flex
         justifyContent="space-between"

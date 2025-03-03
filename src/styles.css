@@ -1,0 +1,8 @@
+.amplify-fileuploader__dropzone__icon,
+.amplify-fileuploader__dropzone__text		{
+  display:none;
+}
+
+.amplify-image__user-photo{
+  width:200px
+}

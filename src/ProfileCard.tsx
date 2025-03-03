@@ -7,15 +7,12 @@ import {
   Text,
   Button,
   useTheme,
-  Image
 } from '@aws-amplify/ui-react';
 import {StorageImage} from '@aws-amplify/ui-react-storage';
 import {IUser} from './types';
 
-
 function ProfileCard(user:IUser){
   const { tokens } = useTheme();
-  const imagePath = user?.imagePath;
   return (
     <View
       backgroundColor={tokens.colors.background.secondary}
@@ -23,13 +20,11 @@ function ProfileCard(user:IUser){
     >
       <Card>
         <Flex direction="column" alignItems="flex-start">
-          <Image
-            alt="default photo"
-            src={imagePath}
-            width="33%"
-          />
-          <StorageImage alt="user profile photo" path={({ identityId }) => `profile-pictures/${identityId}/cat.jpg`} fallbackSrc="../assets/avatar.jpg"
-      onGetUrlError={(error) => console.error(error)}/>;
+        {/* <StorageImage alt="user profile photo" path={result} fallbackSrc="../assets/avatar.jpg"
+      onGetUrlError={(error) => console.error(error)}/> */}
+          <StorageImage alt="user profile photo" path={({ identityId }) => `profile-pictures/${identityId}/avatar.jpeg`} fallbackSrc="public/avatar.jpg"
+      onGetUrlError={(error) => console.error(error)} className="amplify-image__user-photo"/>
+      {user.name}
           <Flex
             direction="column"
             alignItems="flex-start"
