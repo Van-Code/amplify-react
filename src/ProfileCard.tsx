@@ -9,7 +9,7 @@ import {
   useTheme,
   Image
 } from '@aws-amplify/ui-react';
-// import {StorageImage} from '@aws-amplify/ui-react-storage';
+import {StorageImage} from '@aws-amplify/ui-react-storage';
 import {IUser} from './types';
 
 
@@ -28,8 +28,8 @@ function ProfileCard(user:IUser){
             src={imagePath}
             width="33%"
           />
-          {/* <StorageImage alt="user profile photo" path={({ identityId }) => `protected/${identityId}/cat.jpg`} fallbackSrc="../assets/avatar.jpg"
-      onGetUrlError={(error) => console.error(error)}/>; */}
+          <StorageImage alt="user profile photo" path={({ identityId }) => `profile-pictures/${identityId}/cat.jpg`} fallbackSrc="../assets/avatar.jpg"
+      onGetUrlError={(error) => console.error(error)}/>;
           <Flex
             direction="column"
             alignItems="flex-start"

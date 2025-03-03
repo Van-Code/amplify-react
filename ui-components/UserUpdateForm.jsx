@@ -6,8 +6,8 @@ import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getUser } from "./graphql/queries";
 import { updateUser } from "./graphql/mutations";
-import { FileUploader } from "@aws-amplify/ui-react-storage";
 import { VisuallyHidden } from '@aws-amplify/ui-react';
+import { uploadData } from 'aws-amplify/storage';
 
 const client = generateClient();
 export default function UserUpdateForm(props) {
@@ -53,7 +53,7 @@ export default function UserUpdateForm(props) {
     setErrors({});
   };
   const [currentUserRecord, setUserRecord] =
-    React.useState(currentUserModelProp);
+  React.useState(currentUserModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
@@ -94,6 +94,20 @@ export default function UserUpdateForm(props) {
     }
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
+  };
+  const [file, setFile] = React.useState();
+
+  const handleChange = (event) => {
+    setFile(event.target.files?.[0]);
+  };
+  const handleClick = () => {
+    if (!file) {
+      return;
+    }
+    uploadData({
+      path: `picture-submissions/${file.name}`,
+      data: file,
+    });
   };
   return (
     <Grid
@@ -374,12 +388,37 @@ export default function UserUpdateForm(props) {
         hasError={errors.imagePath?.hasError}
         {...getOverrideProps(overrides, "imagePath")}
       ></TextField> */}
-       <FileUploader
+       {/* <FileUploader
         acceptedFileTypes={['image/*']}
         path="public/"
-        maxFileCount={1}
+        maxFileCount={3}
         isResumable
-      />
+      /> */}
+      <input type="file"
+       onChange={(e) => {
+        let { value } = e.target;
+        if (onChange) {
+          const modelFields = {
+            loginID,
+            sub,
+            name,
+            email,
+            bio,
+            birthdate,
+            imagePath: value,
+          };
+          const result = onChange(modelFields);
+          value = result?.imagePath ?? value;
+        }
+        if (errors.imagePath?.hasError) {
+          runValidationTasks("imagePath", value);
+        }
+        setImagePath(value);
+      }}
+      onBlur={() => runValidationTasks("imagePath", imagePath)}
+      errorMessage={errors.imagePath?.errorMessage}
+      hasError={errors.imagePath?.hasError}
+      {...getOverrideProps(overrides, "imagePath")}/>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
@@ -407,6 +446,7 @@ export default function UserUpdateForm(props) {
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}
+            onClick={handleClick}
           ></Button>
         </Flex>
       </Flex>
