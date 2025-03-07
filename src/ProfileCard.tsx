@@ -10,6 +10,8 @@ import {
 } from '@aws-amplify/ui-react';
 import { StorageImage } from  '@aws-amplify/ui-react-storage'
 import { IUser } from './types';
+import { list } from 'aws-amplify/storage';
+import {useState, useEffect} from 'react';
 
 type IProps = {
   user: IUser
@@ -19,6 +21,22 @@ function ProfileCard(props:IProps){
   const {user} = props;
   const { tokens } = useTheme();
 
+  const [images, setImages] = useState<any[]>([]);
+
+  const getImages = async()=>{
+
+    const result = await list({
+      path:  ({identityId}) => `profile-pictures/${identityId}/`,
+    });
+    if(result){
+      setImages(result.items)
+    }
+  }
+ 
+  useEffect(() => {
+    getImages();
+
+  }, []);
   return (
     <View
       backgroundColor={tokens.colors.background.secondary}
@@ -26,8 +44,10 @@ function ProfileCard(props:IProps){
     >
       <Card>
         <Flex direction="column" alignItems="flex-start">
-          <StorageImage alt="user profile photo" path={({ identityId }) => `profile-pictures/${identityId}/avatar.jpg`} fallbackSrc="`profile-pictures/avatar.jpg"
-      onGetUrlError={(error) => console.error(error)}/>
+          { images.map((image) => (
+             <StorageImage  key={image["eTag"]} alt="user profile photo" path={image["path"]} fallbackSrc="profile-pictures/avatar.jpg"
+        onGetUrlError={(error) => console.error(error)}/>
+         ))}
           <Flex
             direction="column"
             alignItems="flex-start"

@@ -155,7 +155,7 @@ export default function UserUpdateForm(props) {
     >
     <FileUploader
       acceptedFileTypes={['image/*']}
-      path="public/"
+      path={({ identityId }) => `profile-pictures/${identityId}/`}
       maxFileCount={1}
       isResumable
     />
