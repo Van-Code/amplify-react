@@ -48,11 +48,11 @@ function ProfileCard(props:IProps){
             </Flex>
 
             <Heading level={5}>
-              {/* {user.name} */}
+              {user.name}
             </Heading>
 
             <Text as="span">
-              {/* {user.bio} */}
+              {user.bio}
             </Text>
             <Button variation="primary">Like</Button>
           </Flex>

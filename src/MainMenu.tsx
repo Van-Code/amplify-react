@@ -19,7 +19,7 @@ function MainMenu() {
         <MenuItem isDisabled onClick={() => alert('Delete')}>
         Delete
         </MenuItem>
-        <MenuItem onClick={() => signOut}>
+        <MenuItem onClick={() => signOut()}>
         Logout
         </MenuItem>
     </Menu>
