@@ -48,7 +48,6 @@ function App(props:IProps) {
     fetchUser()
   }, []);
 
-
   return (
     <>
     <MainMenu />

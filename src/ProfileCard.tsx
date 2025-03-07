@@ -8,7 +8,7 @@ import {
   Button,
   useTheme,
 } from '@aws-amplify/ui-react';
-//import { StorageImage } from  '@aws-amplify/ui-react-storage'
+import { StorageImage } from  '@aws-amplify/ui-react-storage'
 import { IUser } from './types';
 
 type IProps = {
@@ -19,11 +19,6 @@ function ProfileCard(props:IProps){
   const {user} = props;
   const { tokens } = useTheme();
 
-  // function imagePath(identityId:string|undefined){
-  //   if(identityId){
-  //     return `profile-pictures/${identityId}/avatar.jpg`;
-  //   }
-  // }
   return (
     <View
       backgroundColor={tokens.colors.background.secondary}
@@ -31,8 +26,8 @@ function ProfileCard(props:IProps){
     >
       <Card>
         <Flex direction="column" alignItems="flex-start">
-          {/* <StorageImage alt="user profile photo" path={({ identityId }) => imagePath(identityId)} fallbackSrc="../assets/avatar.jpg"
-      onGetUrlError={(error) => console.error(error)}/> */}
+          <StorageImage alt="user profile photo" path={({ identityId }) => `profile-pictures/${identityId}/avatar.jpg`} fallbackSrc="`profile-pictures/avatar.jpg"
+      onGetUrlError={(error) => console.error(error)}/>
           <Flex
             direction="column"
             alignItems="flex-start"
