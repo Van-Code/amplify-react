@@ -1,22 +1,20 @@
-export type IUser = {
+export type IBaseUser = {
     id: string;
-    name?: string;
-    email?: string;
-    bio?: string;
-    imagePath?: string | null;
 }
-export interface IAuthUser extends IUser {
-    signInDetails: {
+export interface IAuthUser extends IBaseUser {
+    signInDetails?: {
         loginId: string;
         authFlowType: string;
     }
-    userId: string,
-    username: string,
+    userId?: string,
+    username?: string,
 }
 
-export interface ICurrentUser extends IAuthUser {
+export interface IUser extends IAuthUser {
     email?: string;
     birthdate?: string;
+    name?: string;
+    bio?: string;
 }
 
 export type ISignOut = {

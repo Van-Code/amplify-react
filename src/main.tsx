@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
+import outputs from "../amplify_outputs.json";
 import { Amplify } from "aws-amplify";
 import { Authenticator,ThemeProvider } from '@aws-amplify/ui-react';
-
+import App from "./App.tsx";
+import "./index.css";
 import '@aws-amplify/ui-react/styles.css';
-
-import outputs from "../amplify_outputs.json";
 
 
 Amplify.configure(outputs);
@@ -17,8 +15,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
       <Authenticator>
-      {({ signOut, user }) => (
-          <App currentUser={user} signOut={signOut}/>
+      {({ user }) => (
+          <App authUser={user}/>
         )}
       </Authenticator>
     </ThemeProvider>

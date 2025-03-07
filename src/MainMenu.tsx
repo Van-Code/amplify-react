@@ -1,16 +1,8 @@
 
 import { Menu, MenuItem, Divider} from '@aws-amplify/ui-react';
-import {SignOut} from './types';
+import { signOut } from 'aws-amplify/auth';
 
-type IProps = {
-  signOut: SignOut
-}
-
-function MainMenu(props:IProps) {
-  const {
-    signOut
-  } = props;
-
+function MainMenu() {
 
   return (
     <Menu menuAlign="start">

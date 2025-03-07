@@ -1,23 +1,28 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
 const schema = a.schema({
-  Post: a.model({
-    id: a.id(),
-    content: a.string(),
-  })
-  .authorization(allow => [allow.owner()]),
-  CurrentUser: a
+  User: a
     .model({
+      id: a.string(),
       name: a.string(),   
       email: a.email(),
       bio: a.string(),
       birthdate: a.date(),
-      imagePath: a.string().default('./src/assets/avatar.jpg')
     })
-    .authorization((allow) => [
-      allow.ownerDefinedIn("profileOwner"), 
-    ])
+    .authorization(allow => [
+      // Allow anyone auth'd with an API key to read everyone's posts.
+      allow.publicApiKey().to(['read']),
+      // Allow signed-in user to create, read, update,
+      // and delete their __OWN__ posts.
+      allow.owner(),
+    ]),
+    Post: a.model({
+      id: a.id(),
+      content: a.string(),
+    })
+    .authorization(allow => [allow.owner()]),
   })
+  
 ;
 
 export type Schema = ClientSchema<typeof schema>;

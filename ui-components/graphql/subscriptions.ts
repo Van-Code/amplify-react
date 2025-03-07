@@ -2,20 +2,18 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateCurrentUser = /* GraphQL */ `
-  subscription OnCreateCurrentUser(
-    $filter: ModelSubscriptionCurrentUserFilterInput
-    $profileOwner: String
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser(
+    $filter: ModelSubscriptionUserFilterInput
+  
   ) {
-    onCreateCurrentUser(filter: $filter, profileOwner: $profileOwner) {
+    onCreateUser(filter: $filter) {
       bio
       birthdate
       createdAt
       email
       id
-      imagePath
       name
-      profileOwner
       sub
       updatedAt
       __typename
@@ -37,20 +35,18 @@ export const onCreatePost = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteCurrentUser = /* GraphQL */ `
-  subscription OnDeleteCurrentUser(
-    $filter: ModelSubscriptionCurrentUserFilterInput
-    $profileOwner: String
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser(
+    $filter: ModelSubscriptionUserFilterInput
+  
   ) {
-    onDeleteCurrentUser(filter: $filter, profileOwner: $profileOwner) {
+    onDeleteUser(filter: $filter) {
       bio
       birthdate
       createdAt
       email
       id
-      imagePath
       name
-      profileOwner
       sub
       updatedAt
       __typename
@@ -72,12 +68,12 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateCurrentUser = /* GraphQL */ `
-  subscription OnUpdateCurrentUser(
-    $filter: ModelSubscriptionCurrentUserFilterInput
-    $profileOwner: String
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+   
   ) {
-    onUpdateCurrentUser(filter: $filter, profileOwner: $profileOwner) {
+    onUpdateUser(filter: $filter) {
       bio
       birthdate
       createdAt
@@ -85,7 +81,6 @@ export const onUpdateCurrentUser = /* GraphQL */ `
       id
       imagePath
       name
-      profileOwner
       sub
       updatedAt
       __typename

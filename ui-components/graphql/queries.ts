@@ -2,17 +2,15 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getCurrentUser = /* GraphQL */ `
-  query GetCurrentUser($id: ID!) {
-    getCurrentUser(id: $id) {
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
       bio
       birthdate
       createdAt
       email
       id
-      imagePath
       name
-      profileOwner
       sub
       updatedAt
       __typename
@@ -31,15 +29,15 @@ export const getPost = /* GraphQL */ `
     }
   }
 `;
-export const listCurrentUsers = /* GraphQL */ `
-  query ListCurrentUsers(
-    $filter: ModelCurrentUserFilterInput
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
     $id: ID
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listCurrentUsers(
+    listUsers(
       filter: $filter
       id: $id
       limit: $limit
@@ -52,9 +50,7 @@ export const listCurrentUsers = /* GraphQL */ `
         createdAt
         email
         id
-        imagePath
         name
-        profileOwner
         sub
         updatedAt
         __typename

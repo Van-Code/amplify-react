@@ -8,19 +8,22 @@ import {
   Button,
   useTheme,
 } from '@aws-amplify/ui-react';
-import {Image} from '@aws-amplify/ui-react';
-// import {StorageImage} from '@aws-amplify/ui-react-storage';
-import { ICurrentUser } from './types';
+//import { StorageImage } from  '@aws-amplify/ui-react-storage'
+import { IUser } from './types';
 
 type IProps = {
-  user: ICurrentUser
+  user: IUser
 }
 
 function ProfileCard(props:IProps){
   const {user} = props;
   const { tokens } = useTheme();
-  console.log("profile",user)
-  const imagePath = user.imagePath ? user.imagePath : '../src/assets/avatar.jpg';
+
+  // function imagePath(identityId:string|undefined){
+  //   if(identityId){
+  //     return `profile-pictures/${identityId}/avatar.jpg`;
+  //   }
+  // }
   return (
     <View
       backgroundColor={tokens.colors.background.secondary}
@@ -28,13 +31,8 @@ function ProfileCard(props:IProps){
     >
       <Card>
         <Flex direction="column" alignItems="flex-start">
-          <Image
-            alt="default photo"
-            src={imagePath}
-            width="33%"
-          />
-          {/* <StorageImage alt="user profile photo" path={({ identityId }) => `protected/${identityId}/cat.jpg`} fallbackSrc="../assets/avatar.jpg"
-      onGetUrlError={(error) => console.error(error)}/>; */}
+          {/* <StorageImage alt="user profile photo" path={({ identityId }) => imagePath(identityId)} fallbackSrc="../assets/avatar.jpg"
+      onGetUrlError={(error) => console.error(error)}/> */}
           <Flex
             direction="column"
             alignItems="flex-start"
@@ -50,11 +48,11 @@ function ProfileCard(props:IProps){
             </Flex>
 
             <Heading level={5}>
-              {user.name}
+              {/* {user.name} */}
             </Heading>
 
             <Text as="span">
-              {user.bio}
+              {/* {user.bio} */}
             </Text>
             <Button variation="primary">Like</Button>
           </Flex>
