@@ -2,24 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $condition: ModelUserConditionInput
-    $input: CreateUserInput!
-  ) {
-    createUser(condition: $condition, input: $input) {
-      bio
-      birthdate
-      createdAt
-      email
-      id
-      name
-      sub
-      updatedAt
-      __typename
-    }
-  }
-`;
 export const createPost = /* GraphQL */ `
   mutation CreatePost(
     $condition: ModelPostConditionInput
@@ -35,19 +17,19 @@ export const createPost = /* GraphQL */ `
     }
   }
 `;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
     $condition: ModelUserConditionInput
-    $input: DeleteUserInput!
+    $input: CreateUserInput!
   ) {
-    deleteUser(condition: $condition, input: $input) {
-      bio
+    createUser(condition: $condition, input: $input) {
+      profile
       birthdate
       createdAt
       email
       id
       name
-      sub
+      owner
       updatedAt
       __typename
     }
@@ -68,19 +50,19 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
     $condition: ModelUserConditionInput
-    $input: UpdateUserInput!
+    $input: DeleteUserInput!
   ) {
-    updateUser(condition: $condition, input: $input) {
-      bio
+    deleteUser(condition: $condition, input: $input) {
+      profile
       birthdate
       createdAt
       email
       id
       name
-      sub
+      owner
       updatedAt
       __typename
     }
@@ -95,6 +77,24 @@ export const updatePost = /* GraphQL */ `
       content
       createdAt
       id
+      owner
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $condition: ModelUserConditionInput
+    $input: UpdateUserInput!
+  ) {
+    updateUser(condition: $condition, input: $input) {
+      profile
+      birthdate
+      createdAt
+      email
+      id
+      name
       owner
       updatedAt
       __typename

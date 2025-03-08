@@ -6,17 +6,15 @@ export type IAuthUser = {
         loginId: string;
         authFlowType: string;
     }
-    userId?: string,
-    username?: string,
+    userId?: string;
+    username?: string;
+    email_verified?: string;
+    sub?:string;
 }
 
 export type IUser = IBaseUser & IAuthUser & {
-    email: string | null;
+    email?: string | null;
     birthdate?: string | null;
     name?: string | null;
-    bio?: string | null;
+    profile?: string | null;
 }
-
-export type ISignOut = {
-    signOut: () => void | undefined;
-  }

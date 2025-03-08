@@ -1,7 +1,8 @@
 
 import { Tabs, View,Card, Flex, useTheme } from '@aws-amplify/ui-react';
 import ProfileCard from './ProfileCard';
-import { IUser } from './types';
+import {IUser} from './types'
+import UpdateProfile from './UpdateProfile.js';
 // @ts-ignore
 import UserUpdateForm from '../ui-components/UserUpdateForm.jsx';
 
@@ -23,7 +24,8 @@ const {user} = props;
       padding={tokens.space.medium}
     ><Card>
       <Flex direction="column" alignItems="flex-start">
-        <UserUpdateForm id={user?.signInDetails?.loginId} user={user}/>
+        <UpdateProfile user={user}/>
+
         </Flex>
       </Card></View>
       </Tabs.Panel>

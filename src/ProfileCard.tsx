@@ -24,9 +24,8 @@ function ProfileCard(props:IProps){
   const [images, setImages] = useState<any[]>([]);
 
   const getImages = async()=>{
-
     const result = await list({
-      path:  ({identityId}) => `profile-pictures/${identityId}/`,
+      path:  ({identityId}) => `profile-pictures/${identityId}/${user.username}`,
     });
     if(result){
       setImages(result.items)
@@ -63,11 +62,11 @@ function ProfileCard(props:IProps){
             </Flex>
 
             <Heading level={5}>
-              {user.name}
+              {user.name ?? ""}
             </Heading>
 
             <Text as="span">
-              {user.bio}
+              {user.profile ?? ""}
             </Text>
             <Button variation="primary">Like</Button>
           </Flex>

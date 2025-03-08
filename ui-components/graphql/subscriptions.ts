@@ -2,24 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser(
-    $filter: ModelSubscriptionUserFilterInput
-  
-  ) {
-    onCreateUser(filter: $filter) {
-      bio
-      birthdate
-      createdAt
-      email
-      id
-      name
-      sub
-      updatedAt
-      __typename
-    }
-  }
-`;
 export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost(
     $filter: ModelSubscriptionPostFilterInput
@@ -35,19 +17,19 @@ export const onCreatePost = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser(
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser(
     $filter: ModelSubscriptionUserFilterInput
-  
+    $owner: String
   ) {
-    onDeleteUser(filter: $filter) {
-      bio
+    onCreateUser(filter: $filter, owner: $owner) {
+      profile
       birthdate
       createdAt
       email
       id
       name
-      sub
+      owner
       updatedAt
       __typename
     }
@@ -68,20 +50,19 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser(
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser(
     $filter: ModelSubscriptionUserFilterInput
-   
+    $owner: String
   ) {
-    onUpdateUser(filter: $filter) {
-      bio
+    onDeleteUser(filter: $filter, owner: $owner) {
+      profile
       birthdate
       createdAt
       email
       id
-      imagePath
       name
-      sub
+      owner
       updatedAt
       __typename
     }
@@ -96,6 +77,24 @@ export const onUpdatePost = /* GraphQL */ `
       content
       createdAt
       id
+      owner
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onUpdateUser(filter: $filter, owner: $owner) {
+      profile
+      birthdate
+      createdAt
+      email
+      id
+      name
       owner
       updatedAt
       __typename

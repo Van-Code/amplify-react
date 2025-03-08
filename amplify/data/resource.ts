@@ -6,7 +6,7 @@ const schema = a.schema({
       id: a.id(),
       name: a.string(),   
       email: a.email(),
-      bio: a.string(),
+      profile: a.string(),
       birthdate: a.date(),
     })
     .authorization(allow => [

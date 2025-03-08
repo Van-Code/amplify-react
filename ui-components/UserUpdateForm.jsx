@@ -1,14 +1,11 @@
-
 /* eslint-disable */
-/* copied fron generated ui-compoonents*/
 "use client";
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getUser } from "./graphql/queries";
-import { FileUploader } from '@aws-amplify/ui-react-storage';
-import '@aws-amplify/ui-react/styles.css';
+import { updateUser } from "./graphql/mutations";
 const client = generateClient();
 export default function UserUpdateForm(props) {
   const {
@@ -16,7 +13,7 @@ export default function UserUpdateForm(props) {
     user: userModelProp,
     onSuccess,
     onError,
-    onSubmit,
+    onSubmit:PostCreateFormProps,
     onValidate,
     onChange,
     overrides,
@@ -24,16 +21,14 @@ export default function UserUpdateForm(props) {
   } = props;
   const initialValues = {
     name: "",
-    email: "",
-    bio: "",
+    email: userModelProp.email,
+    profile: "",
     birthdate: "",
-    imagePath: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
-  const [bio, setBio] = React.useState(initialValues.bio);
+  const [profile, setProfile] = React.useState(initialValues.profile);
   const [birthdate, setBirthdate] = React.useState(initialValues.birthdate);
-  const [imagePath, setImagePath] = React.useState(initialValues.imagePath);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = userRecord
@@ -41,13 +36,11 @@ export default function UserUpdateForm(props) {
       : initialValues;
     setName(cleanValues.name);
     setEmail(cleanValues.email);
-    setBio(cleanValues.bio);
+    setProfile(cleanValues.profile);
     setBirthdate(cleanValues.birthdate);
-    setImagePath(cleanValues.imagePath);
     setErrors({});
   };
-  const [userRecord, setUserRecord] =
-    React.useState(userModelProp);
+  const [userRecord, setUserRecord] = React.useState(userModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
@@ -64,12 +57,10 @@ export default function UserUpdateForm(props) {
   }, [idProp, userModelProp]);
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
-  
     name: [],
     email: [{ type: "Email" }],
-    bio: [],
+    profile: [],
     birthdate: [],
-    imagePath: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -99,9 +90,8 @@ export default function UserUpdateForm(props) {
         let modelFields = {
           name: name ?? null,
           email: email ?? null,
-          bio: bio ?? null,
+          profile: profile ?? null,
           birthdate: birthdate ?? null,
-          imagePath: imagePath ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -126,8 +116,10 @@ export default function UserUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
+          console.log("try")
           Object.entries(modelFields).forEach(([key, value]) => {
             if (typeof value === "string" && value === "") {
+           
               modelFields[key] = null;
             }
           });
@@ -153,12 +145,6 @@ export default function UserUpdateForm(props) {
       {...getOverrideProps(overrides, "UserUpdateForm")}
       {...rest}
     >
-    <FileUploader
-      acceptedFileTypes={['image/*']}
-      path={({ identityId }) => `profile-pictures/${identityId}/`}
-      maxFileCount={1}
-      isResumable
-    />
       <TextField
         label="Name"
         isRequired={false}
@@ -168,12 +154,10 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-         
               name: value,
               email,
-              bio,
+              profile,
               birthdate,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -197,12 +181,10 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-          
               name,
               email: value,
-              bio,
+              profile,
               birthdate,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -218,33 +200,31 @@ export default function UserUpdateForm(props) {
         {...getOverrideProps(overrides, "email")}
       ></TextField>
       <TextField
-        label="Bio"
+        label="profile"
         isRequired={false}
         isReadOnly={false}
-        value={bio}
+        value={profile}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-            
               name,
               email,
-              bio: value,
+              profile: value,
               birthdate,
-              imagePath,
             };
             const result = onChange(modelFields);
-            value = result?.bio ?? value;
+            value = result?.profile ?? value;
           }
-          if (errors.bio?.hasError) {
-            runValidationTasks("bio", value);
+          if (errors.profile?.hasError) {
+            runValidationTasks("profile", value);
           }
-          setBio(value);
+          setProfile(value);
         }}
-        onBlur={() => runValidationTasks("bio", bio)}
-        errorMessage={errors.bio?.errorMessage}
-        hasError={errors.bio?.hasError}
-        {...getOverrideProps(overrides, "bio")}
+        onBlur={() => runValidationTasks("profile", profile)}
+        errorMessage={errors.profile?.errorMessage}
+        hasError={errors.profile?.hasError}
+        {...getOverrideProps(overrides, "profile")}
       ></TextField>
       <TextField
         label="Birthdate"
@@ -256,12 +236,10 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              
               name,
               email,
-              bio,
+              profile,
               birthdate: value,
-              imagePath,
             };
             const result = onChange(modelFields);
             value = result?.birthdate ?? value;
@@ -276,8 +254,6 @@ export default function UserUpdateForm(props) {
         hasError={errors.birthdate?.hasError}
         {...getOverrideProps(overrides, "birthdate")}
       ></TextField>
-      
-
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

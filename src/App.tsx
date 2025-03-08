@@ -1,61 +1,43 @@
 import { BrowserRouter, Routes, Route } from "react-router";
+import { useEffect, useState } from "react";
+import { fetchUserAttributes } from 'aws-amplify/auth';
 import UserView from "./UserView";
 import MainMenu from "./MainMenu";
 import ProfileCard from "./ProfileCard";
-import { generateClient } from 'aws-amplify/data';
-import { type Schema } from '../amplify/data/resource';
-import { useEffect,useState } from "react";
-import {IUser} from './types';
-
-const client = generateClient<Schema>();
 
 type IProps = {
-  loginId?: string,
-  userId?: string
+  signOut?: ()=> void;
 }
-
+type IUser = {
+  email?: string,
+  email_verified?: string,
+  sub?: string,
+}
 function App(props:IProps) {
-  const {
-    loginId, userId
-  } = props;
-
-  const initialValues = {
-    id: userId || "",
-    email:  loginId || ""
-  }
-  const [user, setUser] = useState<IUser>(initialValues);
- 
-  const fetchUser = async()=>{
-      let { data: user } = await client.models.User.get({
-        id: userId,
-      });
-      if(user){
-        setUser(user);
+  const [user, setUser] = useState<IUser>()
+  const onLoad = async() =>{
+      const data = await fetchUserAttributes();
+      if(data){
+        setUser(data);
       }else{
-      const {data: user2, errors} = await client.models.User.create(initialValues);
-        try {
-          if(user2){
-            setUser(user2);
-          }
-        }
-        catch(err){
-          console.log(errors)
-        }
+        props.signOut
       }
-  };
-  
-  useEffect(() => {
-    fetchUser()
-  }, []);
+    }
+
+  useEffect(()=>{
+    onLoad()
+  },[])
 
   return (
     <>
     <MainMenu />
     <BrowserRouter>
+    {user && (
       <Routes>  
-        <Route path="/feed" element={<ProfileCard user={user}/> }/>
-        <Route path="/" element={<UserView user={user}/>} />
+          <Route path="/feed" element={<ProfileCard user={user}/> }/>
+          <Route path="/" element={<UserView user={user}/>} />
       </Routes>
+        )}
     </BrowserRouter>
     </>
   );
