@@ -13,17 +13,17 @@ export default function UserUpdateForm(props) {
     user: userModelProp,
     onSuccess,
     onError,
-    onSubmit:PostCreateFormProps,
+    onSubmit,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    name: "",
+    name: userModelProp.name,
     email: userModelProp.email,
-    profile: "",
-    birthdate: "",
+    profile: userModelProp.profile ?? "",
+    birthdate: userModelProp.birthdate ?? "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
@@ -116,7 +116,6 @@ export default function UserUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          console.log("try")
           Object.entries(modelFields).forEach(([key, value]) => {
             if (typeof value === "string" && value === "") {
            

@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { StoreContext } from './App.js';
 import UserUpdateForm from '../ui-components/UserUpdateForm.jsx'; // @ts-ignore
 import { IUser } from './types';
 import { View } from '@aws-amplify/ui-react';
@@ -5,12 +7,9 @@ import { FileUploader } from '@aws-amplify/ui-react-storage';
 import { updateUserAttributes } from "aws-amplify/auth";
 import {UserUpdateFormInputValues} from '../ui-components/UserUpdateForm.ts';
 
-type IProps = {
-    user: IUser
-}
 
-export default function UpdateProfile(props:IProps){
-    const {user} = props;
+export default function UpdateProfile(){
+    const user = useContext(StoreContext)
 
     const updateFunc = async(fields:UserUpdateFormInputValues) => {
         await updateUserAttributes({
@@ -28,11 +27,11 @@ export default function UpdateProfile(props:IProps){
         <View>
             <FileUploader
                 acceptedFileTypes={['image/*']}
-                path={({ identityId }) => `profile-pictures/${identityId}/${user?.username}/`}
+                path={({ identityId }) => `profile-pictures/${identityId}/${user?.sub}/`}
                 maxFileCount={1}
                 isResumable
                 />
-            <UserUpdateForm id={user?.userId} user={user} onSubmit={updateFunc}></UserUpdateForm>
+            <UserUpdateForm id={user?.sub} user={user} onSubmit={updateFunc}></UserUpdateForm>
         </View>
     )
 }

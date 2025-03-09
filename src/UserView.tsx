@@ -1,18 +1,13 @@
-
 import { Tabs, View,Card, Flex, useTheme } from '@aws-amplify/ui-react';
 import ProfileCard from './ProfileCard';
-import {IUser} from './types'
 import UpdateProfile from './UpdateProfile.js';
 // @ts-ignore
 import UserUpdateForm from '../ui-components/UserUpdateForm.jsx';
 
-type IProps = {
-  user: IUser
-}
-function UserView(props:IProps){
-const {user} = props;
 
+function UserView(){
   const { tokens } = useTheme();
+
   return (
     <Tabs.Container defaultValue="1">
       <Tabs.List spacing="equal">
@@ -24,12 +19,12 @@ const {user} = props;
       padding={tokens.space.medium}
     ><Card>
       <Flex direction="column" alignItems="flex-start">
-        <UpdateProfile user={user}/>
+        <UpdateProfile/>
 
         </Flex>
       </Card></View>
       </Tabs.Panel>
-      <Tabs.Panel value="2"><ProfileCard user={user}/></Tabs.Panel>
+      <Tabs.Panel value="2"><ProfileCard /></Tabs.Panel>
     </Tabs.Container>
      
   );

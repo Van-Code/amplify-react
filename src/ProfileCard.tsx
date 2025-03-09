@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { StoreContext } from './App.js';
 import {
   Card,
   View,
@@ -9,23 +11,22 @@ import {
   useTheme,
 } from '@aws-amplify/ui-react';
 import { StorageImage } from  '@aws-amplify/ui-react-storage'
-import { IUser } from './types';
 import { list } from 'aws-amplify/storage';
 import {useState, useEffect} from 'react';
+import styled from 'styled-components';
 
-type IProps = {
-  user: IUser
-}
+const StyledImage = styled(StorageImage)`
+  max-width: 400px;
+`;
 
-function ProfileCard(props:IProps){
-  const {user} = props;
+function ProfileCard(){
+  const user = useContext(StoreContext)
   const { tokens } = useTheme();
-
   const [images, setImages] = useState<any[]>([]);
 
   const getImages = async()=>{
     const result = await list({
-      path:  ({identityId}) => `profile-pictures/${identityId}/${user.username}`,
+      path:  ({identityId}) => `profile-pictures/${identityId}/${user.sub}`,
     });
     if(result){
       setImages(result.items)
@@ -33,9 +34,11 @@ function ProfileCard(props:IProps){
   }
  
   useEffect(() => {
-    getImages();
-
+    if(user.sub){
+      getImages();
+    }
   }, []);
+  
   return (
     <View
       backgroundColor={tokens.colors.background.secondary}
@@ -44,7 +47,7 @@ function ProfileCard(props:IProps){
       <Card>
         <Flex direction="column" alignItems="flex-start">
           { images.map((image) => (
-             <StorageImage  key={image["eTag"]} alt="user profile photo" path={image["path"]} fallbackSrc="profile-pictures/avatar.jpg"
+             <StyledImage  key={image["eTag"]} alt="user profile photo" path={image["path"]} fallbackSrc="profile-pictures/avatar.jpg"
         onGetUrlError={(error) => console.error(error)}/>
          ))}
           <Flex
@@ -62,11 +65,11 @@ function ProfileCard(props:IProps){
             </Flex>
 
             <Heading level={5}>
-              {user.name ?? ""}
+              {user.name}
             </Heading>
 
             <Text as="span">
-              {user.profile ?? ""}
+              {user.profile}
             </Text>
             <Button variation="primary">Like</Button>
           </Flex>

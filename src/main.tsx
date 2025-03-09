@@ -14,8 +14,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
       <Authenticator>
-      {({ signOut }) => (
-          <App signOut={signOut}/>
+      {({ signOut, user}) => (
+          <App signOut={signOut} user={user}/>
         )}
       </Authenticator>
     </ThemeProvider>

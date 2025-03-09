@@ -41,7 +41,7 @@ export declare type UserUpdateFormProps = React.PropsWithChildren<{
 } & {
     id?: string;
     user?: User;
-    onSubmit?: (fields: UserUpdateFormInputValues) => Prommise<UserUpdateFormInputValues>;
+    onSubmit?: (fields: UserUpdateFormInputValues) => Prommise<UserUpdateFormInputValues>
     onSuccess?: (fields: UserUpdateFormInputValues) => void;
     onError?: (fields: UserUpdateFormInputValues, errorMessage: string) => void;
     onChange?: (fields: UserUpdateFormInputValues) => UserUpdateFormInputValues;

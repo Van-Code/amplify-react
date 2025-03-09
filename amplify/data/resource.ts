@@ -8,6 +8,8 @@ const schema = a.schema({
       email: a.email(),
       profile: a.string(),
       birthdate: a.date(),
+      sub: a.string(),
+      email_verified: a.string()
     })
     .authorization(allow => [
       // Allow anyone auth'd with an API key to read everyone's posts.
@@ -16,11 +18,6 @@ const schema = a.schema({
       // and delete their __OWN__ posts.
       allow.owner(),
     ]),
-    Post: a.model({
-      id: a.id(),
-      content: a.string(),
-    })
-    .authorization(allow => [allow.owner()]),
   })
   
 ;
