@@ -4,23 +4,18 @@ const schema = a.schema({
   User: a
     .model({
       id: a.id(),
-      name: a.string(),   
+      sub: a.string(),
+      name: a.string(),
       email: a.email(),
       profile: a.string(),
       birthdate: a.date(),
-      sub: a.string(),
-      email_verified: a.string()
-    })
-    .authorization(allow => [
-      // Allow anyone auth'd with an API key to read everyone's posts.
-      allow.publicApiKey().to(['read']),
-      // Allow signed-in user to create, read, update,
-      // and delete their __OWN__ posts.
-      allow.owner(),
-    ]),
-  })
-  
-;
+    }).authorization((allow) => [
+      allow.publicApiKey(),
+      // allow.authenticated().to(["read"]),
+      // allow.ownerDefinedIn("profileOwner"),
+
+    ])
+});
 
 export type Schema = ClientSchema<typeof schema>;
 

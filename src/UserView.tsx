@@ -1,11 +1,14 @@
-import { Tabs, View,Card, Flex, useTheme } from '@aws-amplify/ui-react';
+import { Tabs, View, Card, Flex, useTheme } from '@aws-amplify/ui-react';
+import { useContext } from 'react';
+import { UserStore } from './hooks';
 import ProfileCard from './ProfileCard';
 import UpdateProfile from './UpdateProfile.js';
 // @ts-ignore
 import UserUpdateForm from '../ui-components/UserUpdateForm.jsx';
 
 
-function UserView(){
+function UserView() {
+  const user = useContext(UserStore);
   const { tokens } = useTheme();
 
   return (
@@ -15,18 +18,17 @@ function UserView(){
         <Tabs.Item value="2">View</Tabs.Item>
       </Tabs.List>
       <Tabs.Panel value="1"><View
-      backgroundColor={tokens.colors.background.secondary}
-      padding={tokens.space.medium}
-    ><Card>
-      <Flex direction="column" alignItems="flex-start">
-        <UpdateProfile/>
-
-        </Flex>
-      </Card></View>
+        backgroundColor={tokens.colors.background.secondary}
+        padding={tokens.space.medium}
+      ><Card>
+          <Flex direction="column" alignItems="flex-start">
+            <UpdateProfile />
+          </Flex>
+        </Card></View>
       </Tabs.Panel>
-      <Tabs.Panel value="2"><ProfileCard /></Tabs.Panel>
+      <Tabs.Panel value="2"><ProfileCard user={user} /></Tabs.Panel>
     </Tabs.Container>
-     
+
   );
 }
 

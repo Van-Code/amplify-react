@@ -20,11 +20,13 @@ export default function UserUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: userModelProp.name,
-    email: userModelProp.email,
-    profile: userModelProp.profile ?? "",
-    birthdate: userModelProp.birthdate ?? "",
+    sub: "",
+    name: "",
+    email: "",
+    profile: "",
+    birthdate: "",
   };
+  const [sub, setSub] = React.useState(initialValues.sub);
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
   const [profile, setProfile] = React.useState(initialValues.profile);
@@ -34,6 +36,7 @@ export default function UserUpdateForm(props) {
     const cleanValues = userRecord
       ? { ...initialValues, ...userRecord }
       : initialValues;
+    setSub(cleanValues.sub);
     setName(cleanValues.name);
     setEmail(cleanValues.email);
     setProfile(cleanValues.profile);
@@ -57,6 +60,7 @@ export default function UserUpdateForm(props) {
   }, [idProp, userModelProp]);
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
+    sub: [],
     name: [],
     email: [{ type: "Email" }],
     profile: [],
@@ -88,6 +92,7 @@ export default function UserUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          sub: sub ?? null,
           name: name ?? null,
           email: email ?? null,
           profile: profile ?? null,
@@ -118,7 +123,6 @@ export default function UserUpdateForm(props) {
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
             if (typeof value === "string" && value === "") {
-           
               modelFields[key] = null;
             }
           });
@@ -145,6 +149,34 @@ export default function UserUpdateForm(props) {
       {...rest}
     >
       <TextField
+        label="Sub"
+        isRequired={false}
+        isReadOnly={false}
+        value={sub}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub: value,
+              name,
+              email,
+              profile,
+              birthdate,
+            };
+            const result = onChange(modelFields);
+            value = result?.sub ?? value;
+          }
+          if (errors.sub?.hasError) {
+            runValidationTasks("sub", value);
+          }
+          setSub(value);
+        }}
+        onBlur={() => runValidationTasks("sub", sub)}
+        errorMessage={errors.sub?.errorMessage}
+        hasError={errors.sub?.hasError}
+        {...getOverrideProps(overrides, "sub")}
+      ></TextField>
+      <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
@@ -153,6 +185,7 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               name: value,
               email,
               profile,
@@ -180,6 +213,7 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               name,
               email: value,
               profile,
@@ -199,7 +233,7 @@ export default function UserUpdateForm(props) {
         {...getOverrideProps(overrides, "email")}
       ></TextField>
       <TextField
-        label="profile"
+        label="Profile"
         isRequired={false}
         isReadOnly={false}
         value={profile}
@@ -207,6 +241,7 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               name,
               email,
               profile: value,
@@ -235,6 +270,7 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               name,
               email,
               profile,

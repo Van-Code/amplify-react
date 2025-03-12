@@ -18,24 +18,28 @@ export default function UserCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    sub: "",
     name: "",
     email: "",
     profile: "",
     birthdate: "",
   };
+  const [sub, setSub] = React.useState(initialValues.sub);
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
-  const [profile, setBio] = React.useState(initialValues.profile);
+  const [profile, setProfile] = React.useState(initialValues.profile);
   const [birthdate, setBirthdate] = React.useState(initialValues.birthdate);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setSub(initialValues.sub);
     setName(initialValues.name);
     setEmail(initialValues.email);
-    setBio(initialValues.profile);
+    setProfile(initialValues.profile);
     setBirthdate(initialValues.birthdate);
     setErrors({});
   };
   const validations = {
+    sub: [],
     name: [],
     email: [{ type: "Email" }],
     profile: [],
@@ -67,6 +71,7 @@ export default function UserCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          sub,
           name,
           email,
           profile,
@@ -125,6 +130,34 @@ export default function UserCreateForm(props) {
       {...rest}
     >
       <TextField
+        label="Sub"
+        isRequired={false}
+        isReadOnly={false}
+        value={sub}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub: value,
+              name,
+              email,
+              profile,
+              birthdate,
+            };
+            const result = onChange(modelFields);
+            value = result?.sub ?? value;
+          }
+          if (errors.sub?.hasError) {
+            runValidationTasks("sub", value);
+          }
+          setSub(value);
+        }}
+        onBlur={() => runValidationTasks("sub", sub)}
+        errorMessage={errors.sub?.errorMessage}
+        hasError={errors.sub?.hasError}
+        {...getOverrideProps(overrides, "sub")}
+      ></TextField>
+      <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
@@ -133,6 +166,7 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               name: value,
               email,
               profile,
@@ -160,6 +194,7 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               name,
               email: value,
               profile,
@@ -179,7 +214,7 @@ export default function UserCreateForm(props) {
         {...getOverrideProps(overrides, "email")}
       ></TextField>
       <TextField
-        label="profile"
+        label="Profile"
         isRequired={false}
         isReadOnly={false}
         value={profile}
@@ -187,6 +222,7 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               name,
               email,
               profile: value,
@@ -198,7 +234,7 @@ export default function UserCreateForm(props) {
           if (errors.profile?.hasError) {
             runValidationTasks("profile", value);
           }
-          setBio(value);
+          setProfile(value);
         }}
         onBlur={() => runValidationTasks("profile", profile)}
         errorMessage={errors.profile?.errorMessage}
@@ -215,6 +251,7 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               name,
               email,
               profile,
