@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { UserStore, initialUser, createBirthdate } from './hooks';
 import { useEffect, useState } from "react";
 import UserView from "./UserView";
 import MainMenu from "./MainMenu";
@@ -6,20 +7,26 @@ import Discover from "./Discover";
 import { IUser } from "./types";
 import { generateClient } from "aws-amplify/api";
 import { type Schema } from '../amplify/data/resource';
-import { UserStore, initialValues } from './hooks';
 
 type IProps = {
-  email?: string | null,
-  id?: string | null
+  email?: string,
+  id?: string
 }
 
 const client = generateClient<Schema>();
 
 function App(props: IProps) {
-  const [user, setUser] = useState<IUser>(initialValues);
-  initialValues.email = props.email;
-  initialValues.id = props.id;
-  initialValues.sub = props.id;
+  initialUser.email = props.email;
+  initialUser.id = props.id;
+  initialUser.sub = props.id ?? "";
+  initialUser.birthdate = createBirthdate()
+
+  const [user, handleUpdate] = useState<IUser>(initialUser);
+
+  function triggerUpdateUser(data: IUser) {
+    handleUpdate(data)
+
+  }
   const getUser = async () => {
     //check if auth user exists in Dynamo
     const { data: dataUser } = await client.models.User.get({
@@ -28,19 +35,16 @@ function App(props: IProps) {
 
     //create user
     if (dataUser == null) {
-      createUser(initialValues);
+      createUser();
     } else {
-      setUser(dataUser)
+      triggerUpdateUser({ ...user, ...dataUser })
     }
   }
 
-  const createUser = async (userProps: IUser) => {
-    const { data: dataUser } = await client.models.User.create({
-      id: props.id,
-      email: userProps.email
-    })
+  const createUser = async () => {
+    const { data: dataUser } = await client.models.User.create(initialUser)
     if (dataUser) {
-      setUser(initialValues);
+      triggerUpdateUser({ ...initialUser, ...user });
     }
   }
 
@@ -52,7 +56,7 @@ function App(props: IProps) {
     <>
       <BrowserRouter>
         <MainMenu />
-        <UserStore.Provider value={user}>
+        <UserStore.Provider value={{ user, triggerUpdateUser }}>
           <Routes>
             <Route path="/discover" element={<Discover />} />
             <Route path="/account" element={<UserView />} />

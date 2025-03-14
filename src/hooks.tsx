@@ -1,16 +1,23 @@
 
 import { createContext } from "react";
+import { IUser, IContextProps } from "./types";
 
-import { IUser } from "./types";
-
-export const initialValues: IUser = {
+export const initialUser: IUser = {
   id: "",
   sub: "",
   name: "",
   email: "",
   profile: "",
   birthdate: "",
-
+}
+export const initialValues: IContextProps = {
+  user: initialUser,
+  triggerUpdateUser: () => { }
 };
 
-export const UserStore = createContext(initialValues);
+export const UserStore = createContext<IContextProps>(initialValues);
+
+export function createBirthdate() {
+  var today = new Date();
+  return today.toISOString().substring(0, 10);
+}

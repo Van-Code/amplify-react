@@ -11,7 +11,6 @@ export const getUser = /* GraphQL */ `
       id
       name
       profile
-      profileOwner
       sub
       updatedAt
       __typename
@@ -40,7 +39,6 @@ export const listUsers = /* GraphQL */ `
         id
         name
         profile
-        profileOwner
         sub
         updatedAt
         __typename

@@ -12,11 +12,16 @@ export type IAuthUser = {
 
 export type IUser = {
     id?: string | null;
-    sub?: string | null;
+    sub: string | null;
     name?: string | null;
     email?: string | null;
     profile?: string | null;
     birthdate?: string | null;
     createdAt?: string;
     updatedAt?: string;
+}
+export interface IContextProps {
+    user: IUser;
+    triggerUpdateUser: (fields: IUser) => void;
+
 }

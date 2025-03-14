@@ -1,6 +1,7 @@
 /* eslint-disable */
 "use client";
 import * as React from "react";
+import {initialValues} from '../hooks';
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
@@ -19,13 +20,7 @@ export default function UserUpdateForm(props) {
     overrides,
     ...rest
   } = props;
-  const initialValues = {
-    sub: "",
-    name: "",
-    email: "",
-    profile: "",
-    birthdate: "",
-  };
+ 
   const [sub, setSub] = React.useState(initialValues.sub);
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
@@ -58,6 +53,7 @@ export default function UserUpdateForm(props) {
     };
     queryData();
   }, [idProp, userModelProp]);
+
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
     sub: [],
@@ -92,11 +88,11 @@ export default function UserUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          sub: sub ?? null,
-          name: name ?? null,
-          email: email ?? null,
-          profile: profile ?? null,
-          birthdate: birthdate ?? null,
+          sub: sub ?? "",
+          name: name ?? "",
+          email: email ?? "",
+          profile: profile ?? "",
+          birthdate: birthdate,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -121,11 +117,11 @@ export default function UserUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value === "") {
-              modelFields[key] = null;
-            }
-          });
+          // Object.entries(modelFields).forEach(([key, value]) => {
+          //   if (typeof value === "string" && value === "") {
+          //     modelFields[key] = null;
+          //   }
+          // });
           await client.graphql({
             query: updateUser.replaceAll("__typename", ""),
             variables: {
@@ -135,6 +131,7 @@ export default function UserUpdateForm(props) {
               },
             },
           });
+
           if (onSuccess) {
             onSuccess(modelFields);
           }

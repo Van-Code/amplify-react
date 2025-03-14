@@ -1,36 +1,20 @@
+/* eslint-disable */
 import { useContext, useState, useEffect } from 'react';
 import { generateClient } from "aws-amplify/api";
 import { type Schema } from '../amplify/data/resource';
 import { IUser } from "./types";
 import ProfileCard from "./ProfileCard";
 import { UserStore } from "./hooks";
-import * as queries from './components/graphql/queries';
 
-const client = generateClient<Schema>();
 
 function Discover() {
-    const { user, triggerUpdateUser } = useContext(UserStore);
-
+    const { triggerUpdateUser } = useContext(UserStore);
+    const client = generateClient<Schema>();
     const [list, setList] = useState<IUser[]>([]);
 
-    const id = user.id as keyof typeof user;
-
     const getAvailable = async () => {
-
-        const variables = {
-            filter: {
-                and: [{ id: { ne: id } },
-                    // { enabled: { eq: true } }
-                ]
-            }
-        };
-
-        const response = await client.graphql({
-            query: queries.listUsers,
-            variables: variables
-        });
-        // @ts-ignore
-        setList(response?.data?.listUsers.items)
+        const { data: list } = await client.models.User.list();
+        setList(list)
     }
 
     useEffect(() => {

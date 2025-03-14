@@ -8,7 +8,8 @@ import {
   Button,
   useTheme,
 } from '@aws-amplify/ui-react';
-import { IUser } from './types';
+import { UserStore } from './hooks.js';
+import { useContext } from 'react';
 import { StorageImage } from '@aws-amplify/ui-react-storage'
 import { list } from 'aws-amplify/storage';
 import { useState, useEffect } from 'react';
@@ -17,15 +18,9 @@ import styled from 'styled-components';
 const StyledImage = styled(StorageImage)`
   max-width: 400px;
 `;
-type IProps = {
-  user: IUser
-}
 
-function ProfileCard(props: IProps) {
-  const { user } = props;
-  // const user = useContext(UserStore);
-  // console.log("update", user)
-
+function ProfileCard() {
+  const { user } = useContext(UserStore);
   const { tokens } = useTheme();
   const [images, setImages] = useState<any[]>([]);
 

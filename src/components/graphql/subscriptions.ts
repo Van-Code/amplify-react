@@ -32,6 +32,7 @@ export const onDeleteUser = /* GraphQL */ `
       email
       id
       name
+      owner
       profile
       profileOwner
       sub
@@ -51,6 +52,7 @@ export const onUpdateUser = /* GraphQL */ `
       email
       id
       name
+      owner
       profile
       profileOwner
       sub

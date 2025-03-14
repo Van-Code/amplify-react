@@ -14,7 +14,6 @@ export const createUser = /* GraphQL */ `
       id
       name
       profile
-      profileOwner
       sub
       updatedAt
       __typename
@@ -33,7 +32,6 @@ export const deleteUser = /* GraphQL */ `
       id
       name
       profile
-      profileOwner
       sub
       updatedAt
       __typename
@@ -52,7 +50,6 @@ export const updateUser = /* GraphQL */ `
       id
       name
       profile
-      profileOwner
       sub
       updatedAt
       __typename

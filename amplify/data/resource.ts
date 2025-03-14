@@ -8,7 +8,7 @@ const schema = a.schema({
       name: a.string(),
       email: a.email(),
       profile: a.string(),
-      birthdate: a.date(),
+      birthdate: a.string(),
     }).authorization((allow) => [
       allow.publicApiKey(),
       // allow.authenticated().to(["read"]),

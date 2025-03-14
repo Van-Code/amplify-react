@@ -28,5 +28,6 @@ dist-ssr
 amplify_outputs*
 amplifyconfiguration*
 
-# files
-src/Posts.tsx
+# files and 
+backup/*
+ui-components/*
