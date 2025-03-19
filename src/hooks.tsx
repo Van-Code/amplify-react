@@ -17,7 +17,3 @@ export const initialValues: IContextProps = {
 
 export const UserStore = createContext<IContextProps>(initialValues);
 
-export function createBirthdate() {
-  var today = new Date();
-  return today.toISOString().substring(0, 10);
-}

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { UserStore } from './hooks';
-import { UserUpdateFormInputValues } from '../ui-components/UserUpdateForm.jsx'; // @ts-ignore
-import UserUpdateForm from '../ui-components/UserUpdateForm.jsx'; // @ts-ignore
+import { UserUpdateFormInputValues } from './components/UserUpdateForm.jsx'; // @ts-ignore
+import UserUpdateForm from './components/UserUpdateForm.jsx'; // @ts-ignore
 import { IUser } from './types';
 import { View } from '@aws-amplify/ui-react';
 import { FileUploader } from '@aws-amplify/ui-react-storage';

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserStore, initialUser, createBirthdate } from './hooks';
+import { UserStore, initialUser } from './hooks';
 import { useEffect, useState } from "react";
 import UserView from "./UserView";
 import MainMenu from "./MainMenu";
@@ -19,7 +19,7 @@ function App(props: IProps) {
   initialUser.email = props.email;
   initialUser.id = props.id;
   initialUser.sub = props.id ?? "";
-  initialUser.birthdate = createBirthdate()
+  initialUser.birthdate = ""
 
   const [user, handleUpdate] = useState<IUser>(initialUser);
 
