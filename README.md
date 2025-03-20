@@ -1,15 +1,11 @@
-## AWS Amplify React+Vite Starter Template
+## Refresher Social App
 
-This repository provides a starter template for creating applications using React+Vite and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.
-
-## Overview
-
-This template equips you with a foundational React application integrated with AWS Amplify, streamlined for scalability and performance. It is ideal for developers looking to jumpstart their project with pre-configured AWS services like Cognito, AppSync, and DynamoDB.
+Building out a social app Using the AWS Amplify React-Vite Starter Template. App includes cloud services including authentication, GraphQL API, S3 storage, Dynamo database capabilities.
 
 ## Features
 
-- **Authentication**: Setup with Amazon Cognito for secure user authentication.
-- **API**: Ready-to-use GraphQL endpoint with AWS AppSync.
+- **Authentication**: Amazon Cognito for secure user authentication.
+- **API**: GraphQL endpoint with AWS AppSync.
 - **Database**: Real-time database powered by Amazon DynamoDB.
 
 ## Deploying to AWS

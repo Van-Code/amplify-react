@@ -13,7 +13,7 @@ export const createUser = /* GraphQL */ `
       email
       id
       name
-      profile
+      about
       sub
       updatedAt
       __typename
@@ -31,7 +31,7 @@ export const deleteUser = /* GraphQL */ `
       email
       id
       name
-      profile
+      about
       sub
       updatedAt
       __typename
@@ -49,7 +49,7 @@ export const updateUser = /* GraphQL */ `
       email
       id
       name
-      profile
+      about
       sub
       updatedAt
       __typename

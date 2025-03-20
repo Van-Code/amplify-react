@@ -12,6 +12,11 @@ function MainMenu() {
         </Link>
       </MenuItem>
       <MenuItem>
+        <Link to="/profile">
+          Profile
+        </Link>
+      </MenuItem>
+      <MenuItem>
         <Link to="/account">
           Account
         </Link>

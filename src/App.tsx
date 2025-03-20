@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import UserView from "./UserView";
 import MainMenu from "./MainMenu";
 import Discover from "./Discover";
+import AccountUpdateForm from "./components/AccountUpdateForm";
 import { IUser } from "./types";
 import { generateClient } from "aws-amplify/api";
 import { type Schema } from '../amplify/data/resource';
@@ -58,8 +59,8 @@ function App(props: IProps) {
         <MainMenu />
         <UserStore.Provider value={{ user, triggerUpdateUser }}>
           <Routes>
-            <Route path="/discover" element={<Discover />} />
-            <Route path="/account" element={<UserView />} />
+            <Route path="/account" element={<AccountUpdateForm />} />
+            <Route path="/profile" element={<UserView />} />
             <Route path="/" element={<Discover />} />
           </Routes>
         </UserStore.Provider>

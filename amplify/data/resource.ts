@@ -7,13 +7,10 @@ const schema = a.schema({
       sub: a.string(),
       name: a.string(),
       email: a.email(),
-      profile: a.string(),
+      about: a.string(),
       birthdate: a.string(),
     }).authorization((allow) => [
       allow.publicApiKey(),
-      // allow.authenticated().to(["read"]),
-      // allow.ownerDefinedIn("profileOwner"),
-
     ])
 });
 

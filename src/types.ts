@@ -15,7 +15,7 @@ export type IUser = {
     sub: string | null;
     name?: string | null;
     email?: string | null;
-    profile?: string | null;
+    about?: string | null;
     birthdate?: string | null;
     createdAt?: string;
     updatedAt?: string;

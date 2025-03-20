@@ -13,7 +13,7 @@ export const onCreateUser = /* GraphQL */ `
       email
       id
       name
-      profile
+      about
       profileOwner
       sub
       updatedAt
@@ -33,7 +33,7 @@ export const onDeleteUser = /* GraphQL */ `
       id
       name
       owner
-      profile
+      about
       profileOwner
       sub
       updatedAt
@@ -53,7 +53,7 @@ export const onUpdateUser = /* GraphQL */ `
       id
       name
       owner
-      profile
+      about
       profileOwner
       sub
       updatedAt

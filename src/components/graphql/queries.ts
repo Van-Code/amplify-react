@@ -10,7 +10,7 @@ export const getUser = /* GraphQL */ `
       email
       id
       name
-      profile
+      about
       sub
       updatedAt
       __typename
@@ -38,7 +38,7 @@ export const listUsers = /* GraphQL */ `
         email
         id
         name
-        profile
+        about
         sub
         updatedAt
         __typename

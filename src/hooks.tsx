@@ -7,7 +7,7 @@ export const initialUser: IUser = {
   sub: "",
   name: "",
   email: "",
-  profile: "",
+  about: "",
   birthdate: "",
 }
 export const initialValues: IContextProps = {

@@ -10,27 +10,38 @@ import {
 } from '@aws-amplify/ui-react';
 import { UserStore } from './hooks.js';
 import { useContext } from 'react';
-import { StorageImage } from '@aws-amplify/ui-react-storage'
+import { StorageImage } from '@aws-amplify/ui-react-storage';
 import { list } from 'aws-amplify/storage';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const StyledImage = styled(StorageImage)`
   max-width: 400px;
+  width:100px;
+  height:100px;
+  margin: 0 auto;
 `;
 
-function ProfileCard() {
+type IProps = {
+  isOwn?: boolean;
+}
+function ProfileCard(props: IProps) {
   const { user } = useContext(UserStore);
   const { tokens } = useTheme();
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<any | string[]>([]);
+  const { isOwn } = props;
 
   const getImages = async () => {
     const result = await list({
-      path: ({ identityId }) => `profile-pictures/${identityId}/${user.id}`,
+      path: () => `profile-pictures/${user.id}/`,
     });
-    if (result) {
+
+    if (result.items.length > 0) {
       setImages(result.items)
+    } else {
+      setImages(["profile-pictures/avatar.jpg"])
     }
+
   }
 
   useEffect(() => {
@@ -46,8 +57,8 @@ function ProfileCard() {
     >
       <Card>
         <Flex direction="column" alignItems="flex-start">
-          {images.map((image) => (
-            <StyledImage key={image["eTag"]} alt="user profile photo" path={image["path"]} fallbackSrc="profile-pictures/avatar.jpg"
+          {images.map((image: string, i: number) => (
+            <StyledImage key={i} alt="user profile photo" path={image}
               onGetUrlError={(error) => console.error(error)} />
           ))}
           <Flex
@@ -69,9 +80,11 @@ function ProfileCard() {
             </Heading>
 
             <Text as="span">
-              {user.profile}
+              {user.about}
             </Text>
-            <Button variation="primary">Like</Button>
+            {!isOwn && (
+              <Button variation="primary">Like</Button>
+            )}
           </Flex>
         </Flex>
       </Card>

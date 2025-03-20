@@ -2,13 +2,13 @@
 "use client";
 import * as React from "react";
 import {initialValues} from '../hooks';
-import { Button, Flex, Grid, TextAreaField } from "@aws-amplify/ui-react";
+import { Button, Divider, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getUser } from "./graphql/queries";
 import { updateUser } from "./graphql/mutations";
 const client = generateClient();
-export default function UserUpdateForm(props) {
+export default function AccountUpdateForm(props) {
   const {
     id: idProp,
     user: userModelProp,
@@ -21,14 +21,15 @@ export default function UserUpdateForm(props) {
     ...rest
   } = props;
  
-  
-  const [about, setAbout] = React.useState(initialValues.about);
+  const [name, setName] = React.useState(initialValues.name);
+  const [email, setEmail] = React.useState(initialValues.email);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = userRecord
       ? { ...initialValues, ...userRecord }
       : initialValues;
-    setAbout(cleanValues.about);
+    setName(cleanValues.name);
+    setEmail(cleanValues.email);
     setErrors({});
   };
   const [userRecord, setUserRecord] = React.useState(userModelProp);
@@ -49,8 +50,8 @@ export default function UserUpdateForm(props) {
 
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
-    
-    about: [],
+    name: [],
+    email: [{ type: "Email" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -74,11 +75,12 @@ export default function UserUpdateForm(props) {
       as="form"
       rowGap="15px"
       columnGap="15px"
-      paddingTop="20px"
+      padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          about: about ?? "",
+          name: name ?? "",
+          email: email ?? "",
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -103,7 +105,6 @@ export default function UserUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-       
           await client.graphql({
             query: updateUser.replaceAll("__typename", ""),
             variables: {
@@ -124,46 +125,83 @@ export default function UserUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserUpdateForm")}
+      {...getOverrideProps(overrides, "AccountUpdateForm")}
       {...rest}
     >
-      <TextAreaField
-        label="About"
+    
+      <TextField
+        label="Name"
         isRequired={false}
         isReadOnly={false}
-        value={about}
-        rows={3}
+        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              about: value,
+              name: value,
+              email,
             };
             const result = onChange(modelFields);
-            value = result?.about ?? value;
+            value = result?.name ?? value;
           }
-          if (errors.about?.hasError) {
-            runValidationTasks("about", value);
+          if (errors.name?.hasError) {
+            runValidationTasks("name", value);
           }
-          setAbout(value);
+          setName(value);
         }}
-        onBlur={() => runValidationTasks("about", about)}
-        errorMessage={errors.about?.errorMessage}
-        hasError={errors.about?.hasError}
-        {...getOverrideProps(overrides, "about")}
-      ></TextAreaField>
-   
+        onBlur={() => runValidationTasks("name", name)}
+        errorMessage={errors.name?.errorMessage}
+        hasError={errors.name?.hasError}
+        {...getOverrideProps(overrides, "name")}
+      ></TextField>
+      <TextField
+        label="Email"
+        isRequired={false}
+        isReadOnly={false}
+        value={email}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+           
+              name,
+              email: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.email ?? value;
+          }
+          if (errors.email?.hasError) {
+            runValidationTasks("email", value);
+          }
+          setEmail(value);
+        }}
+        onBlur={() => runValidationTasks("email", email)}
+        errorMessage={errors.email?.errorMessage}
+        hasError={errors.email?.hasError}
+        {...getOverrideProps(overrides, "email")}
+      ></TextField>
+      <Divider/>
+      
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
-       
+        <Button
+          children="Reset"
+          type="reset"
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
+          isDisabled={!(idProp || userModelProp)}
+          {...getOverrideProps(overrides, "ResetButton")}
+        ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
-            children="Save"
+            children="Submit"
             type="submit"
             variation="primary"
             isDisabled={
